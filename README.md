@@ -1,3 +1,14 @@
+## ToDo:
+
+1. Create button component
+2. Add conditional statement for history(main) page
+3. Add commit objects to project
+4. Create settings page
+
+Additionally:
+
+1. Create localization file
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
