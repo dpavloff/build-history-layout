@@ -1,8 +1,7 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Home, Settings, Builds } from "./pages";
 
-
-function Router () {
+function Router() {
   return (
     <BrowserRouter>
       <Switch>

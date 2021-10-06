@@ -1,4 +1,4 @@
-import '../styles/footer.css';
+import "../styles/footer.css";
 
 function Footer() {
   return (
@@ -10,7 +10,10 @@ function Footer() {
       </div>
       <div className="copyright">
         <p>
-          © 2021 <a href="https://github.com/dpavloff" target="_blank">@dpavloff</a>
+          © 2021{" "}
+          <a href="https://github.com/dpavloff" target="_blank">
+            @dpavloff
+          </a>
         </p>
       </div>
     </footer>

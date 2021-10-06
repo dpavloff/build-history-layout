@@ -1,7 +1,7 @@
 import "./styles/App.css";
 import React from "react";
 
-import Router from './router';
+import Router from "./router";
 import Footer from "./components/Footer";
 
 function App() {

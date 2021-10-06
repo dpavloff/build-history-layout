@@ -1,5 +1,5 @@
 import "../styles/home.css";
-import instruments from '../static/images/instruments.svg';
+import instruments from "../static/images/instruments.svg";
 
 function Home() {
   return (
@@ -9,9 +9,8 @@ function Home() {
         <button>Settings</button>
       </header>
       <div className="history-content">
-          <img src={instruments} alt="logo" />
-        <p>Configure repository connection
-and synchronization settings</p>
+        <img src={instruments} alt="logo" />
+        <p>Configure repository connection and synchronization settings</p>
         <button>Open settings</button>
       </div>
     </div>
