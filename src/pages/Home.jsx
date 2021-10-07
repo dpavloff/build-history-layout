@@ -9,7 +9,7 @@ function Home() {
   return (
     <div className="history-page">
       <header className="history-header">
-        <h1>School CI server</h1>
+        <h2>School CI server</h2>
         <Link to="/settings">
           <YandexButton label={"Settings"} isGray={true} icon={cog} />
         </Link>
