@@ -5,6 +5,7 @@ const YandexButton = ({
   label = "button",
   onClick,
   icon,
+  isGray,
   isDisabled = false,
 }) => {
   const [hover, setHover] = useState(false);
@@ -19,16 +20,16 @@ const YandexButton = ({
   };
 
   let enabled = {
-    backgroundColor: "#fc0",
+    backgroundColor: isGray ? "#E6E6E6" : "#fc0",
     cursor: "pointer",
   };
 
   let hovered = {
-    backgroundColor: "#F2C200",
+    backgroundColor: isGray ? "#DBDBDB" : "#F2C200",
   };
 
   let focused = {
-    border: "2px solid #B38F00",
+    border: isGray ? "2px solid #B3B3B3" : "2px solid #B38F00",
   };
 
   let disabled = {

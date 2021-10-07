@@ -1,5 +1,5 @@
 .btn {
   padding: 10px 16px; /* change later */
-  border: 0px;
+  border: 2px solid transparent;
   border-radius: 4px;
 }

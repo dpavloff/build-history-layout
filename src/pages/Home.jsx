@@ -3,18 +3,23 @@ import YandexButton from "../components/YandexButton";
 
 import instruments from "../static/images/instruments.svg";
 import cog from "../static/images/cog.svg";
+import { Link } from "react-router-dom";
 
 function Home() {
   return (
     <div className="history-page">
       <header className="history-header">
-        <h2>School CI server</h2>
-        <YandexButton label={"Settings"} icon={cog} />
+        <h1>School CI server</h1>
+        <Link to="/settings">
+          <YandexButton label={"Settings"} isGray={true} icon={cog} />
+        </Link>
       </header>
       <div className="history-content">
         <img src={instruments} alt="logo" />
         <p>Configure repository connection and synchronization settings</p>
-        <YandexButton label={"Open settings"} />
+        <Link to="/settings">
+          <YandexButton label={"Open settings"} />
+        </Link>
       </div>
     </div>
   );

@@ -5,8 +5,11 @@
 }
 
 .history-header {
+  color: #7F8285;
   display: flex;
   padding-top: 0.5rem;
+  padding-left: 4rem;
+  padding-right: 4rem;
   justify-content: space-between;
   align-items: center;
 }
@@ -21,4 +24,8 @@
 .history-content p {
   text-align: center;
   max-width: 15rem;
+}
+
+@media screen and (max-width: 840px) {
+  
 }
