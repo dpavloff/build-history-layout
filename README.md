@@ -1,9 +1,8 @@
 ## ToDo:
 
-1. Create button component
-2. Add conditional statement for history(main) page
-3. Add commit objects to project
-4. Create settings page
+1. Add conditional statement for history(main) page
+2. Add commit objects to project
+3. Create settings page
 
 Additionally:
 
