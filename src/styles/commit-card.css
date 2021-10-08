@@ -1,0 +1,13 @@
+.commit-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1rem 2rem;
+  width: 100%;
+  box-shadow: 0px 1px 1px 0px #4344454d;
+  transition: box-shadow 0.4s ease-in-out;
+}
+
+.commit-card:hover {
+  box-shadow: 0px 2px 8px 0px #4344454d;
+}

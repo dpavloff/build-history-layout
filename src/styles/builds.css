@@ -1,0 +1,12 @@
+.builds-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.builds-buttons {
+  display: flex;
+  width: 10rem;
+  justify-content: space-between;
+  align-items: center;
+}
