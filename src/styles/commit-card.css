@@ -1,13 +1,58 @@
-.commit-card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 1rem 2rem;
+.card-info {
+  display: grid;
+  grid-template-columns: 1fr auto;
   width: 100%;
+}
+
+.commit-card {
+  padding: 1rem 2rem;
   box-shadow: 0px 1px 1px 0px #4344454d;
-  transition: box-shadow 0.4s ease-in-out;
+  transition: box-shadow 0.1s ease-in-out;
+  display: flex;
+  grid-gap: 20px;
+  flex-direction: row;
+  align-items: start;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .commit-card:hover {
   box-shadow: 0px 2px 8px 0px #4344454d;
+}
+
+.build-info {
+  display: flex;
+  gap: 6px;
+}
+
+.branch-info {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 6px;
+}
+
+.build-info img {
+  width: 22px;
+  height: 22px;
+}
+
+.commit-info, .time-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.time-info .date,
+.time-info .build-time {
+  display: flex;
+  align-items: center;
+}
+
+.time-info img {
+  padding-right: 6px;
+}
+
+.is-transparent {
+  opacity: 50%;
 }

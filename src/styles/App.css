@@ -15,6 +15,10 @@ a {
   text-decoration: none;
 }
 
+p, h1, h2, h3 {
+  margin: 0;
+}
+
 a:hover {
   color: #e00000;
   cursor: pointer;

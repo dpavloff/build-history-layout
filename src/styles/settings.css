@@ -1,12 +1,15 @@
+.settings-info h3 {
+    margin-top: 1rem;
+}
+.settings-info p  {
+    margin-top: 0.75rem;
+}
+
 .settings-form {
     display: flex;
     flex-direction: column;
     padding-left: 4rem;
     width: 60%;
-}
-
-.settings-form p {
-    margin-top: 0;
 }
 
 .asterisk {

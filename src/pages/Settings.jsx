@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import '../styles/settings.css';
 import YandexButton from '../components/YandexButton';
 
+// Redux works here ->
+
 function Settings() {
   return (
     <form className="settings-form">

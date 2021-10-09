@@ -2,6 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 60px;
 }
 
 .builds-buttons {
@@ -9,4 +10,15 @@
   width: 10rem;
   justify-content: space-between;
   align-items: center;
+}
+
+.commits {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 1rem 0;
+}
+
+.show-more {
+  margin: 1rem 0;
 }

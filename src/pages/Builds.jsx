@@ -5,7 +5,11 @@ import CommitCard from "../components/CommitCard";
 import triangle from "../static/images/triangle-right.svg";
 import cog from "../static/images/cog.svg";
 
-import commitsArray from "../mock/commits";
+import commitsArray from "../mock/commits"; // должно прийти пропсом из редакса
+
+// Два состояния = зафетчили и не зафетчили
+// Component-connect - 
+// map dispatch to props
 
 function Builds() {
   return (
@@ -22,6 +26,7 @@ function Builds() {
           <CommitCard commitObj={commit} />
         ))}
       </div>
+      <YandexButton defaultClass="show-more" isGray={true} label={"Show more"} />
     </div>
   );
 }
