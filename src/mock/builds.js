@@ -1,5 +1,8 @@
-export default [
+import { v4 as uuidv4 } from "uuid4";
+
+const data = [
   {
+    id: uuidv4(),
     result: "success",
     commitNumber: 1368,
     commitMessage: "add docs for postgres",
@@ -13,6 +16,7 @@ export default [
     buildTimeM: "20",
   },
   {
+    id: uuidv4(),
     result: "success",
     commitNumber: 1368,
     commitMessage: "add docs for postgres",
@@ -26,6 +30,7 @@ export default [
     buildTimeM: "20",
   },
   {
+    id: uuidv4(),
     result: "success",
     commitNumber: 1368,
     commitMessage: "add docs for postgres",
@@ -39,6 +44,7 @@ export default [
     buildTimeM: "20",
   },
   {
+    id: uuidv4(),
     result: "success",
     commitNumber: 1368,
     commitMessage: "add docs for postgres",
@@ -52,6 +58,7 @@ export default [
     buildTimeM: "20",
   },
   {
+    id: uuidv4(),
     result: "success",
     commitNumber: 1368,
     commitMessage: "add docs for postgres",
@@ -65,6 +72,7 @@ export default [
     buildTimeM: "20",
   },
   {
+    id: uuidv4(),
     result: "success",
     commitNumber: 1368,
     commitMessage: "add docs for postgres",
@@ -78,3 +86,5 @@ export default [
     buildTimeM: "20",
   },
 ];
+
+export default data;
