@@ -20,7 +20,11 @@ const YandexButton = ({
     setFocus(!focus);
   };
 
-  let classNames = "btn " + defaultClass + (isGray ? " isGray" : "") + (isDisabled ? " disabled" : "");
+  let classNames =
+    "btn " +
+    defaultClass +
+    (isGray ? " isGray" : "") +
+    (isDisabled ? " disabled" : "");
 
   return (
     <button
@@ -29,7 +33,7 @@ const YandexButton = ({
       onMouseEnter={toggleHover}
       onMouseLeave={toggleHover}
       type="button"
-      onClick={isDisabled ? onClick : () => {}}
+      onClick={isDisabled ? () => {} : onClick}
     >
       {icon ? <img src={icon} alt="" /> : ""}
       <span> </span>
