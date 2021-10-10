@@ -7,9 +7,9 @@
 
 ### Готовые страницы:
 
-localhost:3000/home
-localhost:3000/settings
-localhost:3000/builds
+* localhost:3000/home
+* localhost:3000/settings
+* localhost:3000/builds
 
 
 ### Redux
