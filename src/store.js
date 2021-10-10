@@ -1,10 +1,11 @@
 import { createStore } from "redux";
-import { buildsMock } from "./mock/builds";
+import { composeWithDevTools } from 'redux-devtools-extension';
+import buildsMock from "./mock/builds";
 
 const initReducer = (state = {
     interval: 10,
     buildsInfo: {
-        userNameRepoName: undefined,
+        gitRepo: undefined,
         buildCommand: undefined,
         mainBranch: undefined,
         builds: []
@@ -13,12 +14,17 @@ const initReducer = (state = {
 
 }, action) => {
     switch (action.type) {
+        case 'INIT':
+            return {
+                ...state
+            };
+
         case 'SAVE_INPUTS':
             return {
                 ...state,
                 buildsInfo: {
                     ...state.buildsInfo,
-                    userNameRepoName: action.userNameRepoName,
+                    gitRepo: action.gitRepo,
                     buildCommand: action.buildCommand,
                     mainBranch: action.mainBranch
                 }
@@ -42,4 +48,4 @@ const initReducer = (state = {
     }
 }
 
-export default createStore(initReducer);
+export default createStore(initReducer, composeWithDevTools());
