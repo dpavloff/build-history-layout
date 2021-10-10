@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styled from "styled-components";
 import "../styles/builds.css";
 
 import Modal from "../components/Modal";
@@ -14,6 +15,24 @@ import commitsArray from "../mock/commits"; // должно прийти про�
 // Component-connect -
 // map dispatch to props
 
+const ModalContent = styled.div`
+  display:flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+const HashInput = styled.input`
+  padding: 0.75rem 1.5rem;
+  flex: none;
+  border-radius: 6px;
+  border: 2px solid #D9D9D9;
+  flex-grow: 0;
+  width: 28rem;
+  @media screen and (max-width: 840px) {
+    width:auto
+  }
+`;
+
 function Builds() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -25,7 +44,15 @@ function Builds() {
         }}
         open={isOpen}
       >
-        test
+        <ModalContent>
+          <h3>New build</h3>
+          <p>Enter the commit hash which you want to build.</p>
+          <HashInput placeholder="Commit hash" />
+          <div className="modal-buttons">
+            <YandexButton label={"Run build"} onClick={() => {setIsOpen(false)}}/>
+            <YandexButton isGray={true} label={"Cancel"} onClick={() => {setIsOpen(false)}}/>
+          </div>
+          </ModalContent>
       </Modal>
       <div className="builds-header">
         <h2>philip1967/my-awesome-repo</h2> {/* // change to username later */}

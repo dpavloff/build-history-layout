@@ -19,7 +19,7 @@
 
 .settings-header {
     display: flex;
-    padding-top: 0.5rem;
+    padding-top: 1rem;
     align-items: center;
     color: #7F8285;
 }
@@ -59,8 +59,7 @@ input[type=number]::-webkit-outer-spin-button {
 @media screen and (max-width: 840px) {
     .settings-form {
         padding: 0;
-        margin: 0 1rem;
-        width: 90%;
+        width: 100%;
     }
 
     .buttons {

@@ -57,3 +57,30 @@
 .is-transparent {
   opacity: 50%;
 }
+
+
+@media screen and (max-width: 840px) {
+  .commit-card {
+    padding: 1rem 0.75rem;
+    display: grid;
+    grid-gap: 0.5rem;
+    grid-template-columns: auto 1fr;
+  }
+
+  .card-info {
+    grid-template-columns: none;
+    grid-template-rows: 1fr auto;
+    gap: 1rem;
+  }
+
+  .branch-info {
+    flex-wrap: wrap;
+  }
+  
+  .time-info {
+    border-top: 2px solid #F0F2F3;
+    padding-top: 0.5rem;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+}

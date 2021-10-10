@@ -20,7 +20,7 @@ const Backdrop = styled.div`
 
   & .modal-content {
     transform: translateY(100px);
-    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
     opacity: 0;
   }
 
@@ -40,15 +40,15 @@ const Backdrop = styled.div`
 
 const Content = styled.div`
   position: relative;
-  padding: 20px;
+  padding: 2rem;
   box-sizing: border-box;
   min-height: 50px;
   min-width: 50px;
   max-height: 80%;
   max-width: 80%;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  box-shadow: 0px 6px 16px 0px #4344454D, 0px 0px 1px 0px #4344454D;
   background-color: white;
-  border-radius: 2px;
+  border-radius: 4px;
 `;
 
 export default function Modal(props) {

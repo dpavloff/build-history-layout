@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 60px;
+  height: 5rem;
 }
 
 .builds-buttons {
@@ -12,13 +12,45 @@
   align-items: center;
 }
 
+.modal-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .commits {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 0.5rem;
   margin: 1rem 0;
 }
 
 .show-more {
   margin: 1rem 0;
+}
+
+@media screen and (max-width: 840px) {
+  
+  .builds-header {
+    align-items: flex-start;
+    padding-top: 1rem;
+  }
+  
+  .builds-buttons .btn {
+    font-size: 0;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+  }
+
+  .builds-buttons {
+    justify-content: space-evenly;
+  }
+
+  .build-info {
+    flex-direction: column;
+  }
+
+  .card-info {
+    grid-template-rows: 1fr auto;
+  }
 }
