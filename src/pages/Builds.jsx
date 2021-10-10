@@ -1,15 +1,16 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import "../styles/builds.css";
 
 import Modal from "../components/Modal";
 
 import YandexButton from "../components/YandexButton";
-import CommitCard from "../components/CommitCard";
+import BuildCard from "../components/BuildCard";
 import triangle from "../static/images/triangle-right.svg";
 import cog from "../static/images/cog.svg";
 
-import commitsArray from "../mock/commits"; // должно прийти пропсом из редакса
+import buildsArr from "../mock/builds"; // должно прийти пропсом из редакса
 
 // Два состояния = зафетчили и не зафетчили
 // Component-connect -
@@ -65,12 +66,14 @@ function Builds() {
             icon={triangle}
             isGray={true}
           />
-          <YandexButton label={""} icon={cog} isGray={true} />
+          <Link to="/settings">
+            <YandexButton label={""} icon={cog} isGray={true} />
+          </Link>
         </div>
       </div>
       <div className="commits">
-        {commitsArray.map((commit) => (
-          <CommitCard commitObj={commit} />
+        {buildsArr.map((build) => (
+          <BuildCard buildObj={build} />
         ))}
       </div>
       <YandexButton

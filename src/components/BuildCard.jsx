@@ -6,9 +6,9 @@ import calendarIcon from "../static/images/calendar.svg";
 import clockIcon from "../static/images/clock.svg";
 import userIcon from "../static/images/user.svg";
 
-import "../styles/commit-card.css";
+import "../styles/build-card.css";
 
-function CommitCard({ commitObj, ...props }) {
+function BuildCard({ buildObj, ...props }) {
   let styleObj = {
     icon: {
       success: successIcon,
@@ -44,31 +44,31 @@ function CommitCard({ commitObj, ...props }) {
   }
 
   return (
-    <div className="commit-card">
-      <img src={styleObj.icon[commitObj.result]} alt={commitObj.result} />
+    <div className="build-card">
+      <img src={styleObj.icon[buildObj.result]} alt={buildObj.result} />
        <div className="card-info">
         <div className="commit-info">
           <div className="build-info">
-              <h3 style={styleObj.color[commitObj.result]} className="commit-number">
-              #{commitObj.commitNumber}
+              <h3 style={styleObj.color[buildObj.result]} className="commit-number">
+              #{buildObj.commitNumber}
               </h3>
-              <p className="commit-message">{commitObj.commitMessage}</p>
+              <p className="commit-message">{buildObj.commitMessage}</p>
           </div>
           <div className="branch-info">
               <img className="is-transparent" src={commitIcon} alt="" />
-              <p>{commitObj.branchName}</p>
-              <p className="is-transparent">{commitObj.commitHash}</p>
-              <p><img className="is-transparent" src={userIcon} alt="" />{commitObj.authorName}</p>
+              <p>{buildObj.branchName}</p>
+              <p className="is-transparent">{buildObj.commitHash}</p>
+              <p><img className="is-transparent" src={userIcon} alt="" />{buildObj.authorName}</p>
           </div>
         </div>
         <div className="time-info is-transparent">
             <div className="date">
                 <img src={calendarIcon} alt="" />
-                <p> {commitObj.buildDay} {months[commitObj.buildMonth]}, {commitObj.buildTimestamp}</p>
+                <p> {buildObj.buildDay} {months[buildObj.buildMonth]}, {buildObj.buildTimestamp}</p>
             </div>
             <div className="build-time">
                 <img src={clockIcon} alt="" />
-                <p>{commitObj.buildTimeH} ч {commitObj.buildTimeM} мин</p>
+                <p>{buildObj.buildTimeH} ч {buildObj.buildTimeM} мин</p>
             </div>
         </div>
       </div>
@@ -77,4 +77,4 @@ function CommitCard({ commitObj, ...props }) {
   );
 }
 
-export default CommitCard;
+export default BuildCard;
