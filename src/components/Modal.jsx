@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 import Portal from "./Portal";
@@ -52,11 +52,11 @@ const Content = styled.div`
 `;
 
 export default function Modal(props) {
-  const [active, setActive] = React.useState(false);
+  const [active, setActive] = useState(false);
   const { open, onClose, locked } = props;
-  const backdrop = React.useRef(null);
+  const backdrop = useRef(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const { current } = backdrop;
 
     const transitionEnd = () => setActive(open);

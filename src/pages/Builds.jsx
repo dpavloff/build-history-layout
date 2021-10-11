@@ -4,13 +4,14 @@ import styled from "styled-components";
 import "../styles/builds.css";
 
 import Modal from "../components/Modal";
-
+import Header from "../components/Header";
 import YandexButton from "../components/YandexButton";
 import BuildCard from "../components/BuildCard";
 import triangle from "../static/images/triangle-right.svg";
 import cog from "../static/images/cog.svg";
 
 import buildsArr from "../mock/builds"; // должно прийти пропсом из редакса
+
 
 // Два состояния = зафетчили и не зафетчили
 // Component-connect -
@@ -31,6 +32,24 @@ const HashInput = styled.input`
   width: 28rem;
   @media screen and (max-width: 840px) {
     width: auto;
+  }
+`;
+
+const BuildButtons = styled.div`
+  display: flex;
+  width: 10rem;
+  justify-content: space-between;
+  align-items: center;
+
+  @media screen and (max-width: 840px) {
+    justify-content: space-evenly;
+    
+    & .btn {
+      font-size: 0;
+      width: 2rem;
+      height: 2rem;
+      padding: 0;
+    }
   }
 `;
 
@@ -66,9 +85,8 @@ function Builds() {
           </div>
         </ModalContent>
       </Modal>
-      <div className="builds-header">
-        <h2>philip1967/my-awesome-repo</h2> {/* // change to username later */}
-        <div className="builds-buttons">
+      <Header title={"philip1967/my-awesome-repo"}>
+        <BuildButtons>
           <YandexButton
             onClick={() => {
               setIsOpen(true);
@@ -80,8 +98,8 @@ function Builds() {
           <Link to="/settings">
             <YandexButton label={""} icon={cog} isGray={true} />
           </Link>
-        </div>
-      </div>
+        </BuildButtons>  
+      </Header>
       <div className="commits">
         {buildsArr.map((build) => (
           <BuildCard id={build.id} buildObj={build} />
