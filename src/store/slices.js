@@ -31,6 +31,8 @@ export const repoSlice = createSlice({
            state.repoName = repoName;
            state.mainBranch = mainBranch;
            state.buildCommand = buildCommand; 
+
+           return state;
         }
     },
     extraReducers: {
@@ -47,6 +49,8 @@ export const intervalSlice = createSlice({
         saveInterval: (state, action) => {
             const interval = action.payload.interval;
             state = interval;
+
+            return state;
         }
     }
 });
@@ -58,6 +62,8 @@ export const isLoadingBuildsSlice = createSlice({
         toggleIsLoading: (state, action) => {
             const toggledLoading = action.payload.isLoading;
             state = toggledLoading;
+
+            return state;
         }
     }
 })
