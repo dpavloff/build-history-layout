@@ -1,10 +1,9 @@
 import '../styles/settings.css';
 import Form from '../components/Form'
-// Redux works here ->
 
 function Settings() {
   return (
-    <form className="settings-form">
+    <div className="settings-form">
       <header className="settings-header">
         <h1>School CI server</h1>
       </header>
@@ -13,7 +12,7 @@ function Settings() {
         <p className="text-gray">Configure repository connection and synchronization settings.</p>
       </div>
       <Form />
-    </form>
+    </div>
   );
 }
 
