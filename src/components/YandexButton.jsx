@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import React from 'react'
+import React from 'react';
 
-export default function YandexButton({label, h = "28px", w = "28px", onClick, icon, type = "button", isGray = false, isDisabled = false}) {
+export default function YandexButton({label, onClick, icon, type = "button", isGray = false, isDisabled = false, isSettings = false}) {
 
   const ButtonContent = ({icon, label}) => (
     <div>
@@ -10,14 +10,11 @@ export default function YandexButton({label, h = "28px", w = "28px", onClick, ic
   );
   
   const Button = styled.button`
-    width: ${props => props.w};
-    height: ${props => props.h};
+    padding: ${props => props.isSettings ? "5px 8px" : "10px 13px"};
     border: 2px solid transparent;
     border-radius: 4px;
     background-color: ${props => props.isGray ? "#E6E6E6" : "#fc0"};
     cursor: pointer;
-    height: 28px;
-    width: 87px;
   
     &:hover {
       background-color: ${props => props.isGray ? "#DBDBDB" : "#F2C200"};
@@ -25,6 +22,10 @@ export default function YandexButton({label, h = "28px", w = "28px", onClick, ic
   
     &:focus {
       border: 2px solid ${props => props.isGray ? "#B3B3B3" : "#B38F00"};
+    }
+
+    @media screen and (max-width: 840px) {
+      font-size: ${props => props.isSettings ? "0" : "inherit"}
     }
   `;
   
@@ -47,9 +48,9 @@ export default function YandexButton({label, h = "28px", w = "28px", onClick, ic
     <DisabledButton as={type} onClick={() => {}}>
       <ButtonContent icon={icon} label={label} />
     </DisabledButton>
-    : 
-    <Button w={w} h={h} isGray={isGray} as={type} onClick={onClick}>
+    :
+    <Button isSettings={isSettings} isGray={isGray} as={type} onClick={onClick}>
       <ButtonContent icon={icon} label={label} />
-    </Button>
+    </Button>    
   )
 }

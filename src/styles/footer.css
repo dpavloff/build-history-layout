@@ -12,6 +12,7 @@ footer {
   justify-content: space-between;
   align-items: center;
   width: 80vw;
+  flex-wrap: wrap;
 }
 
 footer .links {
@@ -30,7 +31,10 @@ footer a {
 @media screen and (max-width: 500px) {
   footer {
     height: 4rem;
-    padding: 12px 16px;
-    flex-wrap: wrap;
+    padding: 1rem 1.3rem;
+  }
+
+  .footer-content-wrapper {
+    width: 90vw;
   }
 }

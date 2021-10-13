@@ -8,7 +8,7 @@ export default function Header(props) {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 0.8rem;
+    margin-top: 1rem;
     @media screen and (max-width: 840px) {
       align-items: flex-start;
     }
@@ -18,6 +18,10 @@ export default function Header(props) {
     color: ${titleColor};
     font-size: 24px;
     font-weight: 100;
+
+    @media screen and (max-width: 840px) {
+      font-size: 18px
+    }
   `;
 
   return (
