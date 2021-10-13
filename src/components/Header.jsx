@@ -8,7 +8,7 @@ export default function Header(props) {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 3rem;
+    margin-top: 0.8rem;
     @media screen and (max-width: 840px) {
       align-items: flex-start;
     }
@@ -17,7 +17,7 @@ export default function Header(props) {
   const HeaderTitle = styled.h2`
     color: ${titleColor};
     font-size: 24px;
-    font-weight: light;
+    font-weight: 100;
   `;
 
   return (
