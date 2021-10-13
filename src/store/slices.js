@@ -15,7 +15,7 @@ export const getBuildsAsync = createAsyncThunk(
             return { builds }    
         }
     }
-)
+);
 
 export const repoSlice = createSlice({
     name: 'repoInfo',
@@ -66,7 +66,7 @@ export const isLoadingBuildsSlice = createSlice({
             return state;
         }
     }
-})
+});
 
 export const { saveRepoInfo } = repoSlice.actions;
 export const { saveInterval } = intervalSlice.actions;

@@ -12,11 +12,6 @@ import cog from "../static/images/cog.svg";
 
 import buildsArr from "../mock/builds"; // должно прийти пропсом из редакса
 
-
-// Два состояния = зафетчили и не зафетчили
-// Component-connect -
-// map dispatch to props
-
 const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
@@ -106,7 +101,6 @@ function Builds() {
         ))}
       </div>
       <YandexButton
-        defaultClass="show-more"
         isGray={true}
         label={"Show more"}
       />

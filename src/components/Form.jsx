@@ -93,9 +93,9 @@ export default function Form() {
         <span> minutes</span>
       </div>
       <div className="buttons">
-        <YandexButton onClick={onSubmit} label={"Save"} />
+        <YandexButton onClick={onSubmit} label="Save" />
         <Link to="/home">
-          <YandexButton label={"Cancel"} isGray="true" />
+          <YandexButton label="Cancel" isGray="true" />
         </Link>
       </div>
     </FormContainer>

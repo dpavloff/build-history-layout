@@ -1,5 +1,5 @@
 .main {
-  min-height: 100%;
+  min-height: 100vh;
   display: grid;
   grid-template-rows: 1fr auto;
   grid-template-columns: 100%;
@@ -7,7 +7,7 @@
 
 .content {
   max-width: 1024px;
-  width: 90%;
+  width: 80%;
   justify-self: center;
 }
 

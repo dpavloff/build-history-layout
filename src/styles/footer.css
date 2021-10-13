@@ -1,11 +1,17 @@
 footer {
   display: flex;
+  justify-content: center;
+  max-height: 50px;
+  min-height: 32px;
   background-color: #f0f2f3;
   color: #7f8285;
+}
+
+.footer-content-wrapper {
+  display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 4rem;
-  max-height: 50px;
+  width: 80vw;
 }
 
 footer .links {

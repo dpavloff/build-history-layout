@@ -11,14 +11,14 @@ function Home() {
     <div className="history-page">
       <Header title={"School CI server"} titleColor={"#7F8285"}>
         <Link to="/settings">
-            <YandexButton label={"Settings"} isGray={true} icon={cog} />
+            <YandexButton label="Settings" isGray={true} icon={cog} />
         </Link>
       </Header>
       <div className="history-content">
         <img src={instruments} alt="logo" />
         <p>Configure repository connection and synchronization settings</p>
         <Link to="/settings">
-          <YandexButton label={"Open settings"} />
+          <YandexButton label="Open settings" />
         </Link>
       </div>
     </div>

@@ -1,45 +1,55 @@
-import { useState } from "react";
-import "../styles/yandexbutton.css";
+import styled from "styled-components";
+import React from 'react'
 
-const YandexButton = ({
-  label = "button",
-  onClick,
-  defaultClass,
-  icon,
-  isGray,
-  isDisabled = false,
-}) => {
-  const [hover, setHover] = useState(false);
-  const [focus, setFocus] = useState(false);
+export default function YandexButton({label, h = "28px", w = "28px", onClick, icon, type = "button", isGray = false, isDisabled = false}) {
 
-  const toggleHover = () => {
-    setHover(!hover);
-  };
-
-  const toggleFocus = () => {
-    setFocus(!focus);
-  };
-
-  let classNames =
-    "btn " +
-    defaultClass +
-    (isGray ? " isGray" : "") +
-    (isDisabled ? " disabled" : "");
+  const ButtonContent = ({icon, label}) => (
+    <div>
+      {icon ? <img src={icon} alt="" /> : ""} <span> </span> {label}
+    </div>
+  );
+  
+  const Button = styled.button`
+    width: ${props => props.w};
+    height: ${props => props.h};
+    border: 2px solid transparent;
+    border-radius: 4px;
+    background-color: ${props => props.isGray ? "#E6E6E6" : "#fc0"};
+    cursor: pointer;
+    height: 28px;
+    width: 87px;
+  
+    &:hover {
+      background-color: ${props => props.isGray ? "#DBDBDB" : "#F2C200"};
+    }
+  
+    &:focus {
+      border: 2px solid ${props => props.isGray ? "#B3B3B3" : "#B38F00"};
+    }
+  `;
+  
+  const DisabledButton = styled(Button)`
+    cursor: auto;
+    background-color: #f2f2f2;
+    color: rgba(0, 0, 0, 0.5);
+  
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+  
+    &:focus {
+      border: none;
+    }
+  `;
 
   return (
-    <button
-      className={classNames}
-      onFocus={toggleFocus}
-      onMouseEnter={toggleHover}
-      onMouseLeave={toggleHover}
-      type="button"
-      onClick={isDisabled ? () => {} : onClick}
-    >
-      {icon ? <img src={icon} alt="" /> : ""}
-      <span> </span>
-      {label}
-    </button>
-  );
-};
-
-export default YandexButton;
+    isDisabled ? 
+    <DisabledButton as={type} onClick={() => {}}>
+      <ButtonContent icon={icon} label={label} />
+    </DisabledButton>
+    : 
+    <Button w={w} h={h} isGray={isGray} as={type} onClick={onClick}>
+      <ButtonContent icon={icon} label={label} />
+    </Button>
+  )
+}
