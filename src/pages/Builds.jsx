@@ -52,7 +52,7 @@ function Builds() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div>
+    <div className="builds-container">
       <Modal
         onClose={() => {
           setIsOpen(false);
@@ -71,6 +71,7 @@ function Builds() {
               }}
             />
             <YandexButton
+              isSettings={true}
               isGray={true}
               label={"Cancel"}
               onClick={() => {
@@ -80,18 +81,19 @@ function Builds() {
           </div>
         </ModalContent>
       </Modal>
-      <Header title={"philip1967/my-awesome-repo"}>
+      <Header isBold={true} title={"philip1967/my-awesome-repo"}>
         <BuildButtons>
           <YandexButton
             onClick={() => {
               setIsOpen(true);
             }}
+            isSettings={true}
             label={"Run build"}
             icon={triangle}
             isGray={true}
           />
           <Link to="/settings">
-            <YandexButton label={""} icon={cog} isGray={true} />
+            <YandexButton isSettings={true} label={""} icon={cog} isGray={true} />
           </Link>
         </BuildButtons>  
       </Header>
