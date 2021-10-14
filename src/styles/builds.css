@@ -1,5 +1,6 @@
 .builds-container {
   width: 80vw;
+  margin-bottom: 10vh;
   justify-self: center;
 }
 
@@ -20,7 +21,6 @@
 }
 
 @media screen and (max-width: 840px) {
-
   .build-info {
     flex-direction: column;
   }

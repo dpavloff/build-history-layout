@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-import { saveRepoInfo, saveInterval } from "../store/slices";
+import { saveRepoInfo, saveInterval } from "../redux/slices";
 import YandexButton from "../components/YandexButton";
 import MaskedInput from "react-text-mask";
 import styled from "styled-components";
@@ -30,26 +30,34 @@ export default function Form() {
 
   const handleIntervalChange = (e) => {
     setInterval(Number(e.target.value));
-  }
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (repoInfo.repoName && repoInfo.buildCommand && repoInfo.mainBranch && interval) {
+    if (
+      repoInfo.repoName &&
+      repoInfo.buildCommand &&
+      repoInfo.mainBranch &&
+      interval
+    ) {
       dispatch(
         saveRepoInfo({
-          repoInfo: repoInfo
+          repoInfo: repoInfo,
         })
       );
       dispatch(
         saveInterval({
-          interval: interval
+          interval: interval,
         })
       );
-      
-      history.push('/builds');
 
+      // dispatch(
+
+      // )
+
+      history.push("/builds");
     }
-  }
+  };
 
   return (
     <FormContainer>
