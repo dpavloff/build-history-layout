@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-import { saveRepoInfo, saveInterval } from "../redux/slices";
-import YandexButton from "../components/YandexButton";
+import { useDispatch } from "react-redux";
 import MaskedInput from "react-text-mask";
 import styled from "styled-components";
+
+import YandexButton from "../components/YandexButton";
+import { actionSaveRepoInfo } from '../redux/actions/settingsActions';
 
 const FormContainer = styled.form`
   display: flex;
@@ -13,23 +14,18 @@ const FormContainer = styled.form`
 `;
 
 export default function Form() {
-  const dispatch = useDispatch();
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const [repoInfo, setRepoInfo] = useState({
     repoName: "",
     buildCommand: "",
     mainBranch: "",
+    interval: "",
   });
-
-  const [interval, setInterval] = useState(10);
 
   const handleRepoInfoChange = (e) => {
     setRepoInfo({ ...repoInfo, [e.target.name]: e.target.value });
-  };
-
-  const handleIntervalChange = (e) => {
-    setInterval(Number(e.target.value));
   };
 
   const onSubmit = (e) => {
@@ -38,23 +34,9 @@ export default function Form() {
       repoInfo.repoName &&
       repoInfo.buildCommand &&
       repoInfo.mainBranch &&
-      interval
+      repoInfo.interval
     ) {
-      dispatch(
-        saveRepoInfo({
-          repoInfo: repoInfo,
-        })
-      );
-      dispatch(
-        saveInterval({
-          interval: interval,
-        })
-      );
-
-      // dispatch(
-
-      // )
-
+      dispatch(actionSaveRepoInfo(repoInfo));
       history.push("/builds");
     }
   };
@@ -94,7 +76,8 @@ export default function Form() {
       <div>
         <span>Synchronize every </span>
         <MaskedInput
-          onChange={handleIntervalChange}
+          onChange={handleRepoInfoChange}
+          name="interval"
           className="minute-input"
           mask={[/[1-9]/, /\d+/]}
         />

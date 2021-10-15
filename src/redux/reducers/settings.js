@@ -1,3 +1,5 @@
+import * as actions from '../actions/settingsActions';
+
 export const initialState = {
   repoName: "",
   mainBranch: "",
@@ -5,40 +7,25 @@ export const initialState = {
   builds: [],
   interval: 10,
   loading: false,
+  hasErrors: false
 };
 
 export default function settingsReducer(state = initialState, action) {
   switch (action.type) {
-    case "SAVE_REPO_INFO": {
-      const { repoName, mainBranch, buildCommand, interval } =
-        action.payload.repoInfo;
-      state.repoName = repoName;
-      state.mainBranch = mainBranch;
-      state.buildCommand = buildCommand;
-      state.interval = interval;
-
-      return state;
+    case actions.SAVE_REPO_INFO: {
+      return {...state, repoName: action.payload.repoName, mainBranch: action.payload.mainBranch, buildCommand: action.payload.buildCommand, interval: action.payload.interval};
     }
 
-    case "TOGGLE_LOADING": {
-      state.loading = !state.loading;
-
-      return state;
+    case actions.API_GET_BUILDS: {
+      return { ...state, loading: true };
     }
 
-    case "API/GET_BUILDS": {
-      return state;
+    case actions.API_GET_BUILDS_SUCCESS: {
+      return { builds: action.payload, loading: false };
     }
 
-    case "API/GET_BUILDS_SUCCESS": {
-      const builds = action.payload.builds;
-      state.builds = builds;
-
-      return state;
-    }
-
-    case "API/GET_BUILDS_FAILURE": {
-      return state;
+    case actions.API_GET_BUILDS_FAILURE: {
+      return { ...state, loading: false, hasErrors: true};
     }
 
     default:

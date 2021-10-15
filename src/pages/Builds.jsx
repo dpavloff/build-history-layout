@@ -1,113 +1,36 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import "../styles/builds.css";
 
-import Modal from "../components/Modal";
-import Header from "../components/Header";
-import YandexButton from "../components/YandexButton";
-import BuildCard from "../components/BuildCard";
-import triangle from "../static/images/triangle-right.svg";
-import cog from "../static/images/cog.svg";
+import BuildsContainer from "../components/BuildsContainer";
+import { fetchBuilds } from "../redux/actions/settingsActions";
 
-import buildsArr from "../mock/builds"; // должно прийти пропсом из редакса
+function Builds({loading, builds, hasErrors}) {
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(fetchBuilds());
+  }, [dispatch])
 
-const ModalContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
-const HashInput = styled.input`
-  padding: 0.75rem 1.5rem;
-  flex: none;
-  border-radius: 6px;
-  border: 2px solid #d9d9d9;
-  flex-grow: 0;
-  width: 28rem;
-  @media screen and (max-width: 840px) {
-    width: auto;
+  const renderContent = () => {
+    if (loading) return <p>Loading...</p>
+    if (hasErrors) return <p>There appears to be an error with the server. Please try again.</p>
+    if (builds) return <BuildsContainer buildsArr={builds} />
   }
-`;
-
-const BuildButtons = styled.div`
-  display: flex;
-  width: 10rem;
-  justify-content: space-between;
-  align-items: center;
-
-  @media screen and (max-width: 840px) {
-    justify-content: space-evenly;
-    
-    & .btn {
-      font-size: 0;
-      width: 2rem;
-      height: 2rem;
-      padding: 0;
-    }
-  }
-`;
-
-function Builds() {
-  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="builds-container">
-      <Modal
-        onClose={() => {
-          setIsOpen(false);
-        }}
-        open={isOpen}
-      >
-        <ModalContent>
-          <h3>New build</h3>
-          <p>Enter the commit hash which you want to build.</p>
-          <HashInput placeholder="Commit hash" />
-          <div className="modal-buttons">
-            <YandexButton
-              label={"Run build"}
-              onClick={() => {
-                setIsOpen(false);
-              }}
-            />
-            <YandexButton
-              isSettings={true}
-              isGray={true}
-              label={"Cancel"}
-              onClick={() => {
-                setIsOpen(false);
-              }}
-            />
-          </div>
-        </ModalContent>
-      </Modal>
-      <Header isBold={true} title={"philip1967/my-awesome-repo"}>
-        <BuildButtons>
-          <YandexButton
-            onClick={() => {
-              setIsOpen(true);
-            }}
-            isSettings={true}
-            label={"Run build"}
-            icon={triangle}
-            isGray={true}
-          />
-          <Link to="/settings">
-            <YandexButton isSettings={true} label={""} icon={cog} isGray={true} />
-          </Link>
-        </BuildButtons>  
-      </Header>
-      <div className="commits">
-        {buildsArr.map((build) => (
-          <BuildCard id={build.id} buildObj={build} />
-        ))}
-      </div>
-      <YandexButton
-        isGray={true}
-        label={"Show more"}
-      />
-    </div>
+    (<div>
+      {renderContent()}
+    </div> )
   );
 }
 
-export default Builds;
+const mapStateToProps = (state) => ({
+  loading: state.loading,
+  builds: state.builds,
+  hasErrors: state.hasErrors,
+})
+
+export default connect(mapStateToProps)(Builds);
+

@@ -125,7 +125,7 @@ const data = [
     authorName: "Philip Kirkorov",
     buildDay: "21",
     buildMonth: "1",
-    buildTimestamp: "03:06",
+    buildTimestamp: "03:06", 
     buildTimeH: "1",
     buildTimeM: "20",
     result: "pending"
