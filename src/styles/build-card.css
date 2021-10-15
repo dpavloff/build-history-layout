@@ -25,6 +25,14 @@
   gap: 6px;
 }
 
+.commit-number {
+  font-size: 18px;
+}
+
+.commit-message {
+  font-size: 16px;
+}
+
 .branch-info {
   display: flex;
   justify-content: flex-start;

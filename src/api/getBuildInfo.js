@@ -1,3 +1,8 @@
-// GET commits
-// PARAMS username - название репозитория
-// fetch(url).then(x => )
+import { data } from '../mock/builds';
+
+const builds = data;
+
+export async function getBuildsFromApi() {    
+    await setTimeout(() => {}, 10000);
+    return builds;
+}

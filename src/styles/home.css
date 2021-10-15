@@ -2,6 +2,8 @@
   display: grid;
   grid-template-rows: auto 1fr;
   height: 100%;
+  width: 80vw;
+  margin: auto;
 }
 
 .history-header {
@@ -20,6 +22,7 @@
   justify-content: center;
   align-items: center;
   gap: 2rem;
+  padding-bottom: 20px;
 }
 
 .history-content p {
@@ -27,16 +30,18 @@
   max-width: 15rem;
 }
 
+.history-content img {
+  width: 128px;
+  height: 128px;
+}
+
 @media screen and (max-width: 840px) {
-  .history-header {
-    padding: 0.75rem 1rem;
-    justify-content: space-between;
+  .history-page {
+    width: 90vw;
   }
 
-  .history-header button {
-    font-size: 0;
-    padding: 0;
-    width: 2rem;
-    height: 2rem;
+  .history-content {
+    padding-bottom: 0;
+    padding-top: 1rem;
   }
 }

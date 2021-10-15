@@ -2,13 +2,13 @@ import React from "react";
 import styled from "styled-components";
 
 export default function Header(props) {
-  const { title, titleColor = "black" } = props;
+  const { title, titleColor = "black", isBold } = props;
 
   const Header = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 3rem;
+    margin-top: 1rem;
     @media screen and (max-width: 840px) {
       align-items: flex-start;
     }
@@ -17,7 +17,11 @@ export default function Header(props) {
   const HeaderTitle = styled.h2`
     color: ${titleColor};
     font-size: 24px;
-    font-weight: light;
+    font-weight: ${isBold ? 500 : 100};
+
+    @media screen and (max-width: 840px) {
+      font-size: 18px
+    }
   `;
 
   return (

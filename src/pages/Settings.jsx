@@ -1,14 +1,15 @@
 import '../styles/settings.css';
 import Form from '../components/Form'
+import Header from '../components/Header';
 
 function Settings() {
   return (
     <div className="settings-form">
-      <header className="settings-header">
-        <h1>School CI server</h1>
+      <header className="text-gray">
+      <Header title={"School CI server"} titleColor={"#7F8285"} />
       </header>
       <div className="settings-info">
-        <h3>Settings</h3>
+        <p className='description'>Settings</p>
         <p className="text-gray">Configure repository connection and synchronization settings.</p>
       </div>
       <Form />
