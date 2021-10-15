@@ -8,7 +8,7 @@ import userIcon from "../static/images/user.svg";
 
 import "../styles/build-card.css";
 
-function BuildCard({ buildObj, ...props }) {
+function BuildCard({ buildObj }) {
   let styleObj = {
     icon: {
       success: successIcon,

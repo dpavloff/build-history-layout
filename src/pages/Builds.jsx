@@ -1,12 +1,18 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { connect } from "react-redux";
+import Loader from "react-loader-spinner";
+import styled from "styled-components";
 import "../styles/builds.css";
 
 import BuildsContainer from "../components/BuildsContainer";
 import { fetchBuilds } from "../redux/actions/settingsActions";
 
-function Builds({ loading, builds, hasErrors }) {
+const LoaderContainer = styled.div`
+  margin: auto;
+`
+
+function Builds({ loading, builds, hasErrors, repoName }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -14,12 +20,12 @@ function Builds({ loading, builds, hasErrors }) {
   }, [dispatch]);
 
   const renderContent = () => {
-    if (loading) return <p>Loading...</p>;
+    if (!builds.length && loading) return <LoaderContainer><Loader type="TailSpin" color="#00BFFF" height={80} width={80} /></LoaderContainer>;
     if (hasErrors)
       return (
         <p>There appears to be an error with the server. Please try again.</p>
       );
-    if (builds) return <BuildsContainer buildsArr={builds} />;
+    return <BuildsContainer buildsArr={builds} repoName={repoName} />;
   };
 
   return renderContent();
@@ -29,6 +35,7 @@ const mapStateToProps = (state) => ({
   loading: state.settings.loading,
   builds: state.settings.builds,
   hasErrors: state.settings.hasErrors,
+  repoName: state.settings.repoName
 });
 
 export default connect(mapStateToProps)(Builds);

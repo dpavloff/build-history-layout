@@ -1,7 +1,10 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { connect, useDispatch } from "react-redux";
+import Loader from "react-loader-spinner";
 
+import { fetchBuilds } from "../redux/actions/settingsActions";
 import Modal from "./Modal";
 import Header from "./Header";
 import YandexButton from "./YandexButton";
@@ -35,7 +38,7 @@ const BuildButtons = styled.div`
 
   @media screen and (max-width: 840px) {
     justify-content: space-evenly;
-    
+
     & .btn {
       font-size: 0;
       width: 2rem;
@@ -45,64 +48,79 @@ const BuildButtons = styled.div`
   }
 `;
 
-export default function BuildsContainer ({buildsArr}) {
-    const [isOpen, setIsOpen] = useState(false);
+function BuildsContainer({ buildsArr, repoName, loading }) {
+  const [isOpen, setIsOpen] = useState(false);
 
-    return (
-        <div className="builds-container">
-        <Modal
-          onClose={() => {
-            setIsOpen(false);
-          }}
-          open={isOpen}
-        >
-          <ModalContent>
-            <h3>New build</h3>
-            <p>Enter the commit hash which you want to build.</p>
-            <HashInput placeholder="Commit hash" />
-            <div className="modal-buttons">
-              <YandexButton
-                label={"Run build"}
-                onClick={() => {
-                  setIsOpen(false);
-                }}
-              />
-              <YandexButton
-                isSettings={true}
-                isGray={true}
-                label={"Cancel"}
-                onClick={() => {
-                  setIsOpen(false);
-                }}
-              />
-            </div>
-          </ModalContent>
-        </Modal>
-        <Header isBold={true} title={"philip1967/my-awesome-repo"}>
-          <BuildButtons>
+  const dispatch = useDispatch()
+
+  const title = "philip1967/" + repoName;
+
+  return (
+    <div className="builds-container">
+      <Modal
+        onClose={() => {
+          setIsOpen(false);
+        }}
+        open={isOpen}
+      >
+        <ModalContent>
+          <h3>New build</h3>
+          <p>Enter the commit hash which you want to build.</p>
+          <HashInput placeholder="Commit hash" />
+          <div className="modal-buttons">
             <YandexButton
-              onClick={() => {
-                setIsOpen(true);
-              }}
-              isSettings={true}
               label={"Run build"}
-              icon={triangle}
+              onClick={() => {
+                setIsOpen(false);
+              }}
+            />
+            <YandexButton
+              isGray={true}
+              label={"Cancel"}
+              onClick={() => {
+                setIsOpen(false);
+              }}
+            />
+          </div>
+        </ModalContent>
+      </Modal>
+      <Header isBold={true} title={title}>
+        <BuildButtons>
+          <YandexButton
+            onClick={() => {
+              setIsOpen(true);
+            }}
+            isSettings={true}
+            label={"Run build"}
+            icon={triangle}
+            isGray={true}
+          />
+          <Link to="/settings">
+            <YandexButton
+              isSettings={true}
+              label={""}
+              icon={cog}
               isGray={true}
             />
-            <Link to="/settings">
-              <YandexButton isSettings={true} label={""} icon={cog} isGray={true} />
-            </Link>
-          </BuildButtons>  
-        </Header>
-        <div className="commits">
-          {buildsArr.map((build) => (
-            <BuildCard id={build.id} buildObj={build} />
-          ))}
-        </div>
-        <YandexButton
-          isGray={true}
-          label={"Show more"}
-        />
+          </Link>
+        </BuildButtons>
+      </Header>
+      <div className="commits">
+        {buildsArr.map((build) => (
+          <BuildCard key={build.id} buildObj={build} />
+        ))}
       </div>
-    )
+      {loading ? <Loader type="TailSpin" color="#00BFFF" height={40} width={40} /> : <YandexButton isGray={true} label={"Show more"} onClick={() => dispatch(fetchBuilds())} />
+      }
+    </div>
+  );
 }
+
+const mapStateToProps = (state) => ({
+  loading: state.settings.loading,
+  builds: state.settings.builds,
+  hasErrors: state.settings.hasErrors,
+  repoName: state.settings.repoName
+});
+
+export default connect(mapStateToProps)(BuildsContainer);

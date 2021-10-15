@@ -28,4 +28,13 @@
   .card-info {
     grid-template-rows: 1fr auto;
   }
+  
+  .commits ~ button {
+    width: 100%;
+  }
+
+  .commits ~ div {
+    display: flex;
+    justify-content: center;
+  }
 }
