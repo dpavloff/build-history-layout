@@ -21,7 +21,7 @@ export default function settingsReducer(state = initialState, action) {
     }
 
     case actions.API_GET_BUILDS_SUCCESS: {
-      return { builds: action.payload, loading: false };
+      return { ...state, builds: action.payload, loading: false };
     }
 
     case actions.API_GET_BUILDS_FAILURE: {

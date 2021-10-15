@@ -18,8 +18,9 @@ export const getBuildsFailure = () => ({
   type: API_GET_BUILDS_FAILURE,
 });
 
-export const getBuildsSuccess = () => ({
+export const getBuildsSuccess = (builds) => ({
   type: API_GET_BUILDS_SUCCESS,
+  payload: builds
 });
 
 export function actionSaveRepoInfo(data) {
@@ -33,10 +34,11 @@ export function fetchBuilds() {
     dispatch(getBuilds());
 
     try {
-      const data = await getBuildsFromApi();
-      
-      dispatch(getBuildsFromApi(data));
+      await getBuildsFromApi().then(data =>
+        dispatch(getBuildsSuccess(data))
+      );
     } catch (err) {
+      console.log(err);
       dispatch(getBuildsFailure());
     }
   }

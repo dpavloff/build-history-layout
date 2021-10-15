@@ -87,7 +87,7 @@ import { v4 as uuidv4 } from "uuid";
 //   },
 // ];
 
-const data = [
+export const data = [
   {
     id: uuidv4(),
     commitNumber: "1368",
@@ -214,6 +214,4 @@ const data = [
     buildTimeM: "20",
     result: "success"
   }
-]
-
-export default data;
+];
