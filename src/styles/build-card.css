@@ -62,11 +62,6 @@
   padding-right: 6px;
 }
 
-.is-transparent {
-  opacity: 50%;
-}
-
-
 @media screen and (max-width: 840px) {
   .build-card {
     padding: 1rem 0.75rem;
@@ -84,9 +79,9 @@
   .branch-info {
     flex-wrap: wrap;
   }
-  
+
   .time-info {
-    border-top: 2px solid #F0F2F3;
+    border-top: 2px solid #f0f2f3;
     padding-top: 0.5rem;
     flex-direction: row;
     justify-content: flex-start;
