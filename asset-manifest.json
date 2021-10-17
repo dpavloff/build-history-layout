@@ -1,0 +1,33 @@
+{
+  "files": {
+    "main.css": "/build-history-layout/static/css/main.304214d6.chunk.css",
+    "main.js": "/build-history-layout/static/js/main.dd5103f7.chunk.js",
+    "main.js.map": "/build-history-layout/static/js/main.dd5103f7.chunk.js.map",
+    "runtime-main.js": "/build-history-layout/static/js/runtime-main.a7878783.js",
+    "runtime-main.js.map": "/build-history-layout/static/js/runtime-main.a7878783.js.map",
+    "static/css/2.ab75b8d7.chunk.css": "/build-history-layout/static/css/2.ab75b8d7.chunk.css",
+    "static/js/2.9bef24ad.chunk.js": "/build-history-layout/static/js/2.9bef24ad.chunk.js",
+    "static/js/2.9bef24ad.chunk.js.map": "/build-history-layout/static/js/2.9bef24ad.chunk.js.map",
+    "index.html": "/build-history-layout/index.html",
+    "static/css/2.ab75b8d7.chunk.css.map": "/build-history-layout/static/css/2.ab75b8d7.chunk.css.map",
+    "static/css/main.304214d6.chunk.css.map": "/build-history-layout/static/css/main.304214d6.chunk.css.map",
+    "static/js/2.9bef24ad.chunk.js.LICENSE.txt": "/build-history-layout/static/js/2.9bef24ad.chunk.js.LICENSE.txt",
+    "static/media/calendar.721ff41d.svg": "/build-history-layout/static/media/calendar.721ff41d.svg",
+    "static/media/clock.9a6ea995.svg": "/build-history-layout/static/media/clock.9a6ea995.svg",
+    "static/media/cog.3972ffc2.svg": "/build-history-layout/static/media/cog.3972ffc2.svg",
+    "static/media/commit.dd9f0cca.svg": "/build-history-layout/static/media/commit.dd9f0cca.svg",
+    "static/media/failure.e5c28c40.svg": "/build-history-layout/static/media/failure.e5c28c40.svg",
+    "static/media/instruments.138de78f.svg": "/build-history-layout/static/media/instruments.138de78f.svg",
+    "static/media/pending.9d0fda25.svg": "/build-history-layout/static/media/pending.9d0fda25.svg",
+    "static/media/success.f0967a4d.svg": "/build-history-layout/static/media/success.f0967a4d.svg",
+    "static/media/triangle-right.608a4bfc.svg": "/build-history-layout/static/media/triangle-right.608a4bfc.svg",
+    "static/media/user.08ce57e7.svg": "/build-history-layout/static/media/user.08ce57e7.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a7878783.js",
+    "static/css/2.ab75b8d7.chunk.css",
+    "static/js/2.9bef24ad.chunk.js",
+    "static/css/main.304214d6.chunk.css",
+    "static/js/main.dd5103f7.chunk.js"
+  ]
+}
