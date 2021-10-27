@@ -11,7 +11,12 @@ function Home() {
     <div className="history-page">
       <Header title={"School CI server"} titleColor={"#7F8285"}>
         <Link to="/settings">
-            <YandexButton label="Settings" isSettings={true} isGray={true} icon={cog} />
+          <YandexButton
+            label="Settings"
+            isSettings={true}
+            isGray={true}
+            icon={cog}
+          />
         </Link>
       </Header>
       <div className="history-content">
