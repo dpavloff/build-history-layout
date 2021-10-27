@@ -45,7 +45,6 @@ export function fetchMetricsFromApi() {
   return async (dispatch) => {
     try {
       await getMetricsFromApi().then(data => {
-        console.log(data);
         dispatch(getMetricsSuccess(data))
       });
     } catch (err) {

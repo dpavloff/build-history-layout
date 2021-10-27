@@ -34,7 +34,12 @@ export default function settingsReducer(state = initialState, action) {
     }
 
     case actions.API_GET_METRICS_SUCCESS: {
-      return { ...state, metrics: [...action.payload], loading: false }
+      const metrics = [...action.payload].sort((a,b) => {
+        let x = a['name'];
+        let y = b['name'];
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+      });
+      return { ...state, metrics: metrics, loading: false }
     }
 
     default:

@@ -75,7 +75,7 @@ function Performance({ metrics, loading }) {
             </thead>
             <tbody>
               {metrics.map((metric, i) => (
-                <tr>
+                <tr key={metric.id}>
                   <MetricsTableData>{i}</MetricsTableData>
                   <MetricsTableData>{metric.name}</MetricsTableData>
                   <MetricsTableData>
