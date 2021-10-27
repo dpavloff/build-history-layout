@@ -1,47 +1,41 @@
-import { PERFORMANCE_DUMP } from '../config';
-
 import { EventEmitter } from 'events';
-import { existsAsync } from 'fs';
+import axios from 'axios';
 
 class Database extends EventEmitter {
     constructor() {
         super();
 
-        this.metrics = {};
+        this.database = {
+            metrics: []
+        };
     }
 
     async initFromDump() {
-        if (existsAsync(PERFORMANCE_DUMP) === false) {
-            return;
-        }
+        this.database = {
+            metrics: []
+        };
 
-        const dump = require(PERFORMANCE_DUMP);
-
-        if (typeof dump.metrics === Object) {
-            this.metrics = {};
-
-            for (let metric in dump.metrics) {
-                const data = JSON.parse(metric);
-                const id = data.id;
-                this.metrics[id] = data;
-            }
-        }
+        const dump = await axios.get('http://localhost:3000/metrics');        
+        this.database.metrics = dump.data;
     }
 
     async saveMetricsAsync(metric) {
         const data = JSON.parse(metric);
-        const id = data.id;
-        this.metrics[id] = data;
-        this.emit("changed");
+        this.database.metrics.push(data);
+        await axios.post('http://localhost:3000/metrics', data);
     }
 
-    toJSON() {
-        return {
-            metrics: this.metrics,
-        }
+    getMetrics() {
+        return this.database.metrics;
     }
 }
 
 const db = new Database();
+
+db.initFromDump();
+
+// db.on("changed", async () => {
+//     await axios.post('http://localhost:3000/metrics', this.database.metrics[this.database.metrics.length - 1])
+// });
 
 export default db;

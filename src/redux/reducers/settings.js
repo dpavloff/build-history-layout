@@ -7,7 +7,8 @@ export const initialState = {
   builds: [],
   interval: 10,
   loading: false,
-  hasErrors: false
+  hasErrors: false,
+  metrics: []
 };
 
 export default function settingsReducer(state = initialState, action) {
@@ -26,6 +27,14 @@ export default function settingsReducer(state = initialState, action) {
 
     case actions.API_GET_BUILDS_FAILURE: {
       return { ...state, loading: false, hasErrors: true};
+    }
+
+    case actions.GET_METRICS: {
+      return state;
+    }
+
+    case actions.SAVE_METRICS: {
+      return { ...state, metrics: [...state.metrics, ...action.payload] }
     }
 
     default:

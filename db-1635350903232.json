@@ -1,0 +1,77 @@
+{
+  "metrics": [
+    {
+      "name": "FCP",
+      "value": 6767,
+      "delta": 6767,
+      "entries": [
+        {
+          "name": "first-contentful-paint",
+          "entryType": "paint",
+          "startTime": 6767,
+          "duration": 0
+        }
+      ],
+      "id": "v1-1635347374474-6416499071347"
+    },
+    {
+      "name": "TTFB",
+      "value": 5653,
+      "delta": 5653,
+      "entries": [
+        {
+          "name": "http://localhost:3001/build-history-layout",
+          "entryType": "navigation",
+          "startTime": 0,
+          "duration": 6979,
+          "initiatorType": "navigation",
+          "nextHopProtocol": "http/1.1",
+          "workerStart": 0,
+          "redirectStart": 0,
+          "redirectEnd": 0,
+          "fetchStart": -12,
+          "domainLookupStart": 70,
+          "domainLookupEnd": 71,
+          "connectStart": 71,
+          "connectEnd": 72,
+          "secureConnectionStart": 0,
+          "requestStart": 506,
+          "responseStart": 5653,
+          "responseEnd": 5653,
+          "transferSize": 201,
+          "encodedBodySize": 655,
+          "decodedBodySize": 655,
+          "serverTiming": [],
+          "unloadEventStart": 0,
+          "unloadEventEnd": 0,
+          "domInteractive": 6770,
+          "domContentLoadedEventStart": 6777,
+          "domContentLoadedEventEnd": 6781,
+          "domComplete": 6979,
+          "loadEventStart": 6979,
+          "loadEventEnd": 6979,
+          "type": "navigate",
+          "redirectCount": 0
+        }
+      ],
+      "id": "v1-1635347374474-2233466613554"
+    },
+    {
+      "name": "FID",
+      "value": 13,
+      "delta": 13,
+      "entries": [
+        {
+          "name": "mousedown",
+          "entryType": "first-input",
+          "startTime": 10883,
+          "duration": 15,
+          "processingStart": 10896,
+          "processingEnd": 10897,
+          "cancelable": true
+        }
+      ],
+      "id": "v1-1635347374473-5515898732237"
+    }
+  ]
+}
