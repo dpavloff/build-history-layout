@@ -30,7 +30,7 @@
   max-width: 15rem;
 }
 
-.history-content img {
+.history-content > img {
   width: 128px;
   height: 128px;
 }

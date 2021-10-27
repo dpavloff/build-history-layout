@@ -1,3 +1,11 @@
+import db from "./database";
+
+export function sendAnalyticsToDB(metric) {
+  const body = JSON.stringify(metric);
+
+  db.saveMetricsAsync(body);
+}
+
 /**
  * Лимит на число счетчиков в одном запросе
  *
@@ -80,7 +88,7 @@ Counter.prototype.send = function (name, value) {
       self.sendBatchRequest();
     }, COUNTERS_BATCH_TIMEOUT);
   } else {
-    sendBatchRequest();
+    this.sendBatchRequest();
   }
 };
 

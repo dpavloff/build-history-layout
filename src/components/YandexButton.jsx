@@ -46,7 +46,7 @@ export default function YandexButton({
 }) {
   const ButtonContent = ({ icon, label }) => (
     <div>
-      {icon ? <img src={icon} alt="" /> : ""} <span> </span> {label}
+      {icon ? <img src={icon} width={12} height={12} alt="" /> : ""} <span> </span> {label}
     </div>
   );
 

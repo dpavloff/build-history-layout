@@ -1,7 +1,7 @@
 import "../styles/home.css";
+
 import YandexButton from "../components/YandexButton";
 import Header from "../components/Header";
-
 import instruments from "../static/images/instruments.svg";
 import cog from "../static/images/cog.svg";
 import { Link } from "react-router-dom";
