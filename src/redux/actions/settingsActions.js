@@ -5,8 +5,8 @@ export const SAVE_REPO_INFO = "SAVE_REPO_INFO";
 export const API_GET_BUILDS = "API/GET_BUILDS";
 export const API_GET_BUILDS_SUCCESS = "API/GET_BUILDS_SUCCESS";
 export const API_GET_BUILDS_FAILURE = "API/GET_BUILDS_FAILURE";
-export const SAVE_METRICS = "SAVE_METRICS";
-export const GET_METRICS = "GET_METRICS";
+export const API_GET_METRICS = "API/GET_METRICS";
+export const API_GET_METRICS_SUCCESS = "API/GET_METRICS_SUCCESS";
 
 export const saveRepoInfo = (repoInfo) => ({
   type: SAVE_REPO_INFO,
@@ -33,20 +33,21 @@ export function actionSaveRepoInfo(data) {
 }
 
 export const getMetrics = () => ({
-  type: GET_METRICS
-});
+  type: API_GET_METRICS,
+})
 
-export const saveMetrics = (metrics) => ({
-  type: SAVE_METRICS,
+export const getMetricsSuccess = (metrics) => ({
+  type: API_GET_METRICS_SUCCESS,
   payload: metrics
 });
 
-export function fetchMetrics() {
+export function fetchMetricsFromApi() {
   return async (dispatch) => {
-    dispatch(getMetrics());
-
     try {
-      await getMetricsFromApi().then(data => dispatch(saveMetrics(data)));
+      await getMetricsFromApi().then(data => {
+        console.log(data);
+        dispatch(getMetricsSuccess(data))
+      });
     } catch (err) {
       console.log(err);
     }

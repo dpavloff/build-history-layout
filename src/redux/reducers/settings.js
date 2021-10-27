@@ -29,12 +29,12 @@ export default function settingsReducer(state = initialState, action) {
       return { ...state, loading: false, hasErrors: true};
     }
 
-    case actions.GET_METRICS: {
-      return state;
+    case actions.API_GET_METRICS: {
+      return { ...state, loading: true };
     }
 
-    case actions.SAVE_METRICS: {
-      return { ...state, metrics: [...state.metrics, ...action.payload] }
+    case actions.API_GET_METRICS_SUCCESS: {
+      return { ...state, metrics: [...action.payload], loading: false }
     }
 
     default:

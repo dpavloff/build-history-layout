@@ -1,12 +1,11 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { connect, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import Loader from "react-loader-spinner";
 
 import Header from "../components/Header";
 import cog from "../static/images/cog.svg";
 import YandexButton from "../components/YandexButton";
-import { fetchMetrics } from "../redux/actions/settingsActions";
 
 const PerformanceContainer = styled.div`
   display: flex;
@@ -28,7 +27,7 @@ const MetricsTable = styled.table`
   border-collapse: collapse;
   width: 100%;
   max-width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 2rem;
   background-color: transparent; /* Change the background-color of table here */
   text-align: left; /* Change the text-alignment of table here */
 `;
@@ -36,19 +35,15 @@ const MetricsTable = styled.table`
 const MetricsTableHead = styled.th`
   font-weight: bold;
   border: 1px solid #cccccc; /* Change the border-color of heading here */
-  padding: 8px;
+  padding: 1rem;
 `;
 
 const MetricsTableData = styled.td`
   border: 1px solid #cccccc; /* Change the border-color of cells here */
-  padding: 8px;
+  padding: 1rem;
 `;
 
-function Performance({ metrics }) {
-  const dispatch = useDispatch();
-
-  useEffect(() => dispatch(fetchMetrics()), [dispatch]);
-
+function Performance({ metrics, loading }) {
   return (
     <PerformanceContainer>
       <Header title={"School CI server"} titleColor={"#7F8285"}>
@@ -62,29 +57,40 @@ function Performance({ metrics }) {
         </Link>
       </Header>
       <p>All performance stats will be shown here</p>
+
       <MetricsContainer>
-        <MetricsTable>
-          <MetricsTableHead>Name</MetricsTableHead>
-          <MetricsTableHead>Type</MetricsTableHead>
-          <MetricsTableHead>Value</MetricsTableHead>
-          <MetricsTableHead>Metric name</MetricsTableHead>
-          <MetricsTableHead>Duration</MetricsTableHead>
-          <tbody>
-            {metrics.map((metric) => (
+        {loading ? (
+          <Loader />
+        ) : (
+          <MetricsTable>
+            <thead>
               <tr>
-                <MetricsTableData>{metric.name}</MetricsTableData>
-                <MetricsTableData>
-                  {metric.entries[0].entryType}
-                </MetricsTableData>
-                <MetricsTableData>{metric.value}</MetricsTableData>
-                <MetricsTableData>{metric.entries[0].name}</MetricsTableData>
-                <MetricsTableData>
-                  {metric.entries[0].duration}
-                </MetricsTableData>
+                <MetricsTableHead>#</MetricsTableHead>
+                <MetricsTableHead>Name</MetricsTableHead>
+                <MetricsTableHead>Type</MetricsTableHead>
+                <MetricsTableHead>Value</MetricsTableHead>
+                <MetricsTableHead>Metric name</MetricsTableHead>
+                <MetricsTableHead>Duration</MetricsTableHead>
               </tr>
-            ))}
-          </tbody>
-        </MetricsTable>
+            </thead>
+            <tbody>
+              {metrics.map((metric, i) => (
+                <tr>
+                  <MetricsTableData>{i}</MetricsTableData>
+                  <MetricsTableData>{metric.name}</MetricsTableData>
+                  <MetricsTableData>
+                    {metric.entries[0].entryType}
+                  </MetricsTableData>
+                  <MetricsTableData>{metric.value}</MetricsTableData>
+                  <MetricsTableData>{metric.entries[0].name}</MetricsTableData>
+                  <MetricsTableData>
+                    {metric.entries[0].duration}
+                  </MetricsTableData>
+                </tr>
+              ))}
+            </tbody>
+          </MetricsTable>
+        )}
       </MetricsContainer>
     </PerformanceContainer>
   );
@@ -92,6 +98,7 @@ function Performance({ metrics }) {
 
 const mapStateToProps = (state) => ({
   metrics: state.settings.metrics,
+  loading: state.settings.loading,
 });
 
 export default connect(mapStateToProps)(Performance);
