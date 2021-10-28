@@ -67,6 +67,7 @@ function Performance({ metrics, loading }) {
               <tr>
                 <MetricsTableHead>#</MetricsTableHead>
                 <MetricsTableHead>Name</MetricsTableHead>
+                <MetricsTableHead>Date</MetricsTableHead>
                 <MetricsTableHead>Type</MetricsTableHead>
                 <MetricsTableHead>Value</MetricsTableHead>
                 <MetricsTableHead>Metric name</MetricsTableHead>
@@ -78,6 +79,7 @@ function Performance({ metrics, loading }) {
                 <tr key={metric.id}>
                   <MetricsTableData>{i}</MetricsTableData>
                   <MetricsTableData>{metric.name}</MetricsTableData>
+                  <MetricsTableData>{metric.date}</MetricsTableData>
                   <MetricsTableData>
                     {metric.entries[0].entryType}
                   </MetricsTableData>

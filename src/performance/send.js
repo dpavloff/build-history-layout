@@ -1,17 +1,17 @@
 import axios from "axios";
-import { store } from '../redux/store';
-import { fetchMetricsFromApi } from "../redux/actions/settingsActions";
+import { store } from "../redux/store";
+import { saveNewMetric } from "../redux/actions/settingsActions";
 
 export async function sendAnalyticsToDB(metric) {
-  console.log(metric);
-  await axios.post('http://localhost:3001/metrics', metric, {
+  metric.timestamp = Date.now();
+  await axios.post("http://localhost:3001/metrics", metric, {
     headers: {
       // Overwrite Axios's automatically set Content-Type
-      'Content-Type': 'application/json'
-    }
+      "Content-Type": "application/json",
+    },
   });
 
-  store.dispatch(fetchMetricsFromApi());
+  store.dispatch(saveNewMetric(metric));
 }
 
 /**
