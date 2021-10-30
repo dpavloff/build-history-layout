@@ -1,11 +1,10 @@
 name: CI/CD Pipeline
 on: 
-  release:
+  push:
     branches:
       - master
     tags:
-      - v.*.*.*
-    if: startsWith(github.ref, 'refs/tags/v')
+      - v.*.*
 jobs:
   install_and_serve:
     name: Install and serve
@@ -14,8 +13,19 @@ jobs:
     - uses: action/setup-node@v1
       with:
         node-version: '14'
-    - run: npm install | npm test | npm start
-
+    - run: |
+        npm ci
+        npm install
+        npm test
+        npm start
+  create_ticket:
+    name: Creating ticket and pushing to Yandex.Tracker
+    runs-on: ubuntu-latest
+    steps:
+      - run: | chmod +x create_ticket_script.sh
+        create_ticket_script.sh
+    
+    
 #jobs:
  # install_and_serve:
   #  name: Install and serve
