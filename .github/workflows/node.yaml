@@ -22,8 +22,9 @@ jobs:
     name: Creating ticket and pushing to Yandex.Tracker
     runs-on: ubuntu-latest
     steps:
-      - run: | chmod +x create_ticket_script.sh
-        create_ticket_script.sh
+      - run: | 
+          chmod +x create_ticket_script.sh
+          create_ticket_script.sh
     
     
 #jobs:
