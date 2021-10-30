@@ -1,10 +1,8 @@
 name: CI/CD Pipeline
 on: 
   push:
-    branches:
-      - master
     tags:
-      - v.*.*
+      - '*'
 jobs:
   install_and_serve:
     name: Install and serve
