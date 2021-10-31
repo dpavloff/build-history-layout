@@ -8,7 +8,7 @@ LATEST_TAG=${TAGS[0]}
 PREVIOUS_TAG=${TAGS[1]}
 AUTHOR=$(git show ${LATEST_TAG} | grep Author: | head -1)
 DATE=$(git show ${LATEST_TAG} | grep Date: | head -1)
-UNIQUE="dpavloff/build-history-layout - master ${LATEST_TAG}"
+UNIQUE="dpavloff/build-history-layout/master/${LATEST_TAG}"
 
 COMMITS=$(git log $PREVIOUS_TAG..$LATEST_TAG --pretty=format:"%H")
 
@@ -19,8 +19,7 @@ AUTH_HEADER="Authorization: Oauth: ${OAuth}"
 ORG_HEADER="X-Org-Id: ${OrganizationId}"
 CONTENT_TYPE="Content-Type: application/json"
 
-API_POST_ISSUE=(curl ---write-out '%{http_code}' --silent --output /dev/null --location --request POST ${YANDEX_ISSUES}
---silent
+API_POST_ISSUE=(curl ---write-out '%{http_code}' --silent --output /dev/null --location --request POST ${YANDEX_ISSUES} \
 -H ${AUTH_HEADER} \
 -H ${ORG_HEADER} \
 -H ${CONTENT_TYPE} \
