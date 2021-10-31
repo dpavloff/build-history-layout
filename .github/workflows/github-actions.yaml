@@ -5,14 +5,19 @@ on:
       - "*"
 jobs:
   run-script:
-    name: Install and test
+    name: Create yandex issue
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
     - name: Creating ticket and pushing to Yandex.Tracker
-      run: sh ./.github/scripts/create_ticket_script.sh
+      run: |
+        chmod +x ./scripts/create_ticket_script.sh
+        ./scripts/create_ticket_script.sh
       env:
-        OAuth: ${secrets.OAuth}
-        OrgID: ${secrets.OrgID}
+        OAuth: ${{ secrets.OAUTH }}
+        OrgID: ${{ secrets.ORGID }}
 
     - uses: actions/setup-node@v2
       with:
