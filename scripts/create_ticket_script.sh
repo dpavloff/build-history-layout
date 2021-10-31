@@ -19,25 +19,29 @@ AUTH_HEADER="Authorization: Oauth: ${OAUTH}"
 ORG_HEADER="X-Org-Id: ${ORGID}"
 CONTENT_TYPE="Content-Type: application/json"
 
-API_POST_ISSUE=(curl ---write-out '%{http_code}' --silent --output /dev/null --location -X POST ${YANDEX_ISSUES} \
-	-H ${AUTH_HEADER} \
-	-H ${ORG_HEADER} \
-	-H ${CONTENT_TYPE} \
+API_POST_ISSUE=(curl ---write-out '%{http_code}' --silent --head --output /dev/null --location --request POST "${YANDEX_ISSUES}" \
+	-H "${AUTH_HEADER}" \
+	-H "${ORG_HEADER}" \
+	-H "${CONTENT_TYPE}" \
 	--data-raw '{
 		"queue": "TMP",
 		"summary": "Adding issue for commit "'${LATEST_TAG}',
 		"type": "task",
+		"priority": "1",
+		"assignee": '${AUTHOR}',
 		"description": '${AUTHOR} \n ${DATE} \n V: ${LATEST_TAG}',
 		"unique": '${UNIQUE}'
 	}'
 )
 
+echo "${API_POST_ISSUE}"
+
 sleep 1
 
-API_TASK_KEY=$(curl --write-out '%{http_code}' --silent --output /dev/null -X POST ${YANDEX_ISSUES_SEARCH} \
-	-H ${AUTH_HEADER} \
-	-H ${ORG_HEADER} \
-	-H ${CONTENT_TYPE} \
+API_TASK_KEY=$(curl --write-out '%{http_code}' --silent --output --head /dev/null --request POST "${YANDEX_ISSUES_SEARCH}" \
+	-H "${AUTH_HEADER}" \
+	-H "${ORG_HEADER}" \
+	-H "${CONTENT_TYPE}" \
     --data-raw '{
         "filter": {
             "unique": '${UNIQUE}'
@@ -52,7 +56,7 @@ if [ "$API_POST_ISSUE" -eq 409 ]
 then
     echo "Version already exists"
 
-    UPDATED_STATUS=$(curl --write-out '%{http_code}' --output /dev/null --silent --location -X PATCH \
+    UPDATED_STATUS=$(curl --write-out '%{http_code}' --output /dev/null --head --silent --location -X PATCH \
         "${API_POST_ISSUE}${API_TASK_KEY}" \
 		-H ${AUTH_HEADER} \
 		-H ${ORG_HEADER} \
