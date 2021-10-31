@@ -45,6 +45,9 @@ API_TASK_KEY=$(curl --write-out '%{http_code}' --silent --output /dev/null -X PO
     }'
 )
 
+echo ${API_POST_ISSUE}
+echo ${API_TASK_KEY}
+
 if [ "$API_POST_ISSUE" -eq 409 ]
 then
     echo "Version already exists"
