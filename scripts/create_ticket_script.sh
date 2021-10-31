@@ -8,6 +8,7 @@ LATEST_TAG=${TAGS[0]}
 PREVIOUS_TAG=${TAGS[1]}
 AUTHOR=$(git show ${LATEST_TAG} | grep Author: | head -1)
 DATE=$(git show ${LATEST_TAG} | grep Date: | head -1)
+DESCRIPTION="'${AUTHOR}' \n '${DATE}' \n V: '${LATEST_TAG}'"
 UNIQUE="dpavloff/build-history-layout/master/${LATEST_TAG}"
 
 COMMITS=$(git log $PREVIOUS_TAG..$LATEST_TAG --pretty=format:"%H")
@@ -27,7 +28,7 @@ API_POST_ISSUE=(curl ---write-out '%{http_code}' --silent --head --output /dev/n
 		"queue": "TMP",
 		"summary": ""Adding issue for commit "'${LATEST_TAG}'",
 		"type": "task",
-		"description": '${AUTHOR} \n ${DATE} \n V: ${LATEST_TAG}',
+		"description": '${DESCRIPTION}',
 		"unique": '${UNIQUE}'
 	}'
 )
