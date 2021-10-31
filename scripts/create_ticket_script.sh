@@ -20,65 +20,6 @@ AUTH_HEADER="Authorization: OAuth ${OAuth}"
 ORG_HEADER="X-Org-Id: ${OrgID}"
 CONTENT_TYPE="Content-Type: application/json"
 
-API_POST_ISSUE=(curl --write-out '%{http_code}' --silent --head --output /dev/null --location -X POST ${YANDEX_ISSUES} \
-	-H "${AUTH_HEADER}" \
-	-H "${ORG_HEADER}" \
-	-H "${CONTENT_TYPE}" \
-	--data-raw '{
-		"queue": "TMP",
-		"summary": "Adding issue for commit '"${LATEST_TAG}"'",
-		"type": "task",
-		"description": "'"${DESCRIPTION}"'",
-		"unique": "'"${UNIQUE}"'"
-	}'
-)
-
-echo "${API_POST_ISSUE}"
-
-sleep 1
-
-API_TASK_KEY=$(curl --write-out '%{http_code}' --silent --output --head /dev/null -X POST ${YANDEX_ISSUES_SEARCH} \
-	-H "${AUTH_HEADER}" \
-	-H "${ORG_HEADER}" \
-	-H "${CONTENT_TYPE}" \
-    --data-raw '{
-        "filter": {
-            "unique": "'"${UNIQUE}"'"
-        }
-    }'
-)
-
-if [ $API_POST_ISSUE -eq 409 ]
-then
-    echo "Version already exists"
-
-    UPDATED_STATUS=$(curl --write-out '%{http_code}' --output /dev/null --head --silent --location -X PATCH \
-        "${API_POST_ISSUE}${API_TASK_KEY}" \
-		-H ${AUTH_HEADER} \
-		-H ${ORG_HEADER} \
-		-H ${CONTENT_TYPE} \
-        --data-raw '{
-            "summary": "Adding issue for commit "'"${LATEST_TAG}"'",
-            "description": "'${AUTHOR} \n ${DATE} \n '"V:"' ${LATEST_TAG}' (updated)"
-        }'
-    )
-
-    if [ "$UPDATED_STATUS" -ne 200 ]
-    then
-        echo "Error with updating ticket ${API_TASK_KEY}"
-        exit 1
-    else
-        echo "Successfully updated ticket ${API_TASK_KEY}"
-    fi
-
-elif [ "$API_POST_ISSUE" -ne 201 ]
-then
-    echo "Error with creating release ticket"
-    exit 1
-else
-    echo "Successfully created ticket"
-fi
-
 MARKDOWN="[Full Changelog]($REPOSITORY_URL/compare/$PREVIOUS_TAG...$LATEST_TAG)"
 MARKDOWN+='\n'
 
@@ -101,6 +42,65 @@ for COMMIT in $COMMITS; do
 		MARKDOWN+=" - [#$PULL_NUM]($REPOSITORY_URL/pull/$PULL_NUM): $BODY"
 	fi
 done
+
+API_POST_ISSUE=(curl --write-out '%{http_code}' --silent --head --output /dev/null --location -X POST ${YANDEX_ISSUES} \
+	-H "${AUTH_HEADER}" \
+	-H "${ORG_HEADER}" \
+	-H "${CONTENT_TYPE}" \
+	--data-raw '{
+		"queue": "TMP",
+		"summary": "Adding issue for commit '"${LATEST_TAG}"'",
+		"type": "task",
+		"description": "'"${DESCRIPTION}"'",
+		"unique": "'"${UNIQUE}"'"
+	}'
+)
+
+echo "API_POST_ISSUE: \n ${API_POST_ISSUE}"
+
+API_TASK_KEY=$(curl --write-out '%{http_code}' --silent --output --head /dev/null -X POST ${YANDEX_ISSUES_SEARCH} \
+	-H "${AUTH_HEADER}" \
+	-H "${ORG_HEADER}" \
+	-H "${CONTENT_TYPE}" \
+    --data-raw '{
+        "filter": {
+            "unique": "'"${UNIQUE}"'"
+        }
+    }'
+)
+
+echo "API_TASK_KEY: \n ${API_POST_ISSUE}"
+
+if [ $API_POST_ISSUE -eq 409 ]
+then
+    echo "Version already exists"
+
+    UPDATED_STATUS=$(curl --write-out '%{http_code}' --output /dev/null --head --silent --location -X PATCH \
+        "${API_POST_ISSUE}${API_TASK_KEY}" \
+		-H ${AUTH_HEADER} \
+		-H ${ORG_HEADER} \
+		-H ${CONTENT_TYPE} \
+        --data-raw '{
+            "summary": "Adding issue for commit "'"${LATEST_TAG}"'",
+            "description": "'${AUTHOR} \n ${DATE} \n '"V:"' ${LATEST_TAG}' (updated)"
+        }'
+    )
+
+    if [ "$UPDATED_STATUS" -ne 200 ]
+    then
+        echo "Could not update ticket ${API_TASK_KEY}"
+        exit 1
+    else
+        echo "Ticket updated: ${API_TASK_KEY}"
+    fi
+
+elif [ "$API_POST_ISSUE" -ne 201 ]
+then
+    echo "Error with creating release ticket"
+    exit 1
+else
+    echo "Successfully created ticket"
+fi
 
 # Save our markdown to a file
 echo -e $MARKDOWN > CHANGELOG.md
