@@ -57,4 +57,4 @@ for COMMIT in $COMMITS; do
 done
 
 # Save our markdown to a file
-stdout -e $MARKDOWN
+echo -e $MARKDOWN > CHANGELOG.md
