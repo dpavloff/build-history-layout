@@ -56,6 +56,8 @@ API_POST_ISSUE=(curl --write-out '%{http_code}' --silent --head --output /dev/nu
 	}'
 )
 
+sleep 10
+
 echo "API_POST_ISSUE: \n ${API_POST_ISSUE}"
 
 API_TASK_KEY=$(curl --write-out '%{http_code}' --silent --output --head /dev/null -X POST ${YANDEX_ISSUES_SEARCH} \
