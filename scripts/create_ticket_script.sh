@@ -15,8 +15,8 @@ COMMITS=$(git log $PREVIOUS_TAG..$LATEST_TAG --pretty=format:"%H")
 YANDEX_ISSUES="https://api.tracker.yandex.net/v2/issues/"
 YANDEX_ISSUES_SEARCH="https://api.tracker.yandex.net/v2/issues/_search"
 
-AUTH_HEADER="Authorization: Oauth: ${OAUTH}"
-ORG_HEADER="X-Org-Id: ${ORGID}"
+AUTH_HEADER="Authorization: Oauth: ${OAuth}"
+ORG_HEADER="X-Org-Id: ${OrgID}"
 CONTENT_TYPE="Content-Type: application/json"
 
 API_POST_ISSUE=(curl ---write-out '%{http_code}' --silent --head --output /dev/null --location --request POST "${YANDEX_ISSUES}" \
