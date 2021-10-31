@@ -4,32 +4,24 @@ on:
     tags:
       - "*"
 jobs:
-  install_and_test:
+  run-script:
     name: Install and test
     runs-on: ubuntu-latest
     steps:
-    - name: Setup node
-      uses: actions/setup-node@v2.4.1
+    - name: Creating ticket and pushing to Yandex.Tracker
+      run: sh ./.github/scripts/create_ticket_script.sh
+      env:
+        OAuth: ${secrets.OAuth}
+        OrgID: ${secrets.OrgID}
+
+    - uses: actions/setup-node@v2
       with:
         node-version: '14'
-    - name: npm i  
+    - name: npm install
       run: npm install --silent
     - name: Run tests
       run: npm test
 
-  create_ticket:
-    name: Creating ticket and pushing to Yandex.Tracker
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run bash script
-        run: |
-          chmod +x ../scripts/create_ticket_script.sh
-          ../scripts/create_ticket_script.sh
-        env:
-          OAuth: ${secrets.OAuth}
-          OrgID: ${secrets.OrgID}
-
-# sanity check
   #run-tests:
 
   #docker-build-image:
