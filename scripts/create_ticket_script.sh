@@ -12,10 +12,10 @@ UNIQUE="dpavloff/build-history-layout/master/${LATEST_TAG}"
 
 COMMITS=$(git log $PREVIOUS_TAG..$LATEST_TAG --pretty=format:"%H")
 
-YANDEX_ISSUES="https://api.tracker.yandex.net/v2/issues/"
+YANDEX_ISSUES="https://api.tracker.yandex.net/v2/issues"
 YANDEX_ISSUES_SEARCH="https://api.tracker.yandex.net/v2/issues/_search"
 
-AUTH_HEADER="Authorization: Oauth ${OAuth}"
+AUTH_HEADER="Authorization: OAuth ${OAuth}"
 ORG_HEADER="X-Org-Id: ${OrgID}"
 CONTENT_TYPE="Content-Type: application/json"
 
@@ -27,8 +27,6 @@ API_POST_ISSUE=(curl ---write-out '%{http_code}' --silent --head --output /dev/n
 		"queue": "TMP",
 		"summary": ""Adding issue for commit "'${LATEST_TAG}'",
 		"type": "task",
-		"priority": "1",
-		"assignee": '${AUTHOR}',
 		"description": '${AUTHOR} \n ${DATE} \n V: ${LATEST_TAG}',
 		"unique": '${UNIQUE}'
 	}'
