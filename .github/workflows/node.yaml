@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Creating ticket and pushing to Yandex.Tracker
-      run: ./.github/scripts/create_ticket_script.sh
+      run: ./scripts/create_ticket_script.sh
       env:
         OAuth: ${secrets.OAuth}
         OrgID: ${secrets.OrgID}
