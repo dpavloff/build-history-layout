@@ -15,11 +15,11 @@ COMMITS=$(git log $PREVIOUS_TAG..$LATEST_TAG --pretty=format:"%H")
 YANDEX_ISSUES="https://api.tracker.yandex.net/v2/issues/"
 YANDEX_ISSUES_SEARCH="https://api.tracker.yandex.net/v2/issues/_search"
 
-AUTH_HEADER="Authorization: Oauth ${OAuth}"
+AUTH_HEADER="Authorization: OAuth ${OAuth}"
 ORG_HEADER="X-Org-Id: ${OrgID}"
 CONTENT_TYPE="Content-Type: application/json"
 
-API_POST_ISSUE=(curl ---write-out '%{http_code}' --silent --head --output /dev/null --location --request POST "${YANDEX_ISSUES}" \
+API_POST_ISSUE=(curl ---write-out '%{http_code}' --silent --head --output /dev/null --location -X POST ${YANDEX_ISSUES} \
 	-H "${AUTH_HEADER}" \
 	-H "${ORG_HEADER}" \
 	-H "${CONTENT_TYPE}" \
@@ -27,8 +27,6 @@ API_POST_ISSUE=(curl ---write-out '%{http_code}' --silent --head --output /dev/n
 		"queue": "TMP",
 		"summary": ""Adding issue for commit "'${LATEST_TAG}'",
 		"type": "task",
-		"priority": "1",
-		"assignee": '${AUTHOR}',
 		"description": '${AUTHOR} \n ${DATE} \n V: ${LATEST_TAG}',
 		"unique": '${UNIQUE}'
 	}'
@@ -38,7 +36,7 @@ echo "${API_POST_ISSUE}"
 
 sleep 1
 
-API_TASK_KEY=$(curl --write-out '%{http_code}' --silent --output --head /dev/null --request POST "${YANDEX_ISSUES_SEARCH}" \
+API_TASK_KEY=$(curl --write-out '%{http_code}' --silent --output --head /dev/null -X POST "${YANDEX_ISSUES_SEARCH}" \
 	-H "${AUTH_HEADER}" \
 	-H "${ORG_HEADER}" \
 	-H "${CONTENT_TYPE}" \

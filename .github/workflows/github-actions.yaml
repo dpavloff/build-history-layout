@@ -16,8 +16,8 @@ jobs:
         chmod +x ./scripts/create_ticket_script.sh
         ./scripts/create_ticket_script.sh
       env:
-        OAuth: ${secrets.OAUTH}
-        OrgID: ${secrets.ORGID}
+        OAuth: ${{ secrets.OAUTH }}
+        OrgID: ${{ secrets.ORGID }}
 
     - uses: actions/setup-node@v2
       with:
