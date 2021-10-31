@@ -1,16 +1,4 @@
 #! /usr/bin/bash
-
-# firstTag=$(git tag | sort -r | head -1)
-# secondTag=$(git tag | sort -r | head -2 | tail -1)
-# author=$(git show ${firstTag} | grep Author: | tr -d 'Author:')
-# date=$(git show ${firstTag} | grep Date: | tr -d 'Date:')
-
-# git log ${secondTag}..${firstTag} 
-
-#chmod +x create_ticket_script.sh
-
-
-
 REPOSITORY_URL=https://github.com/dpavloff/build-history-layout
 
 GIT_TAGS=$(git tag -l --sort=-version:refname)
@@ -18,8 +6,32 @@ GIT_TAGS=$(git tag -l --sort=-version:refname)
 TAGS=${GIT_TAGS}
 LATEST_TAG=${TAGS[0]}
 PREVIOUS_TAG=${TAGS[1]}
+AUTHOR=$(git show ${LATEST_TAG} | grep Author: | head -1)
+DATE=$(git show ${LATEST_TAG} | grep Date: | head -1)
+UNIQUE="dpavloff/build-history-layout - master ${LATEST_TAG}"
 
 COMMITS=$(git log $PREVIOUS_TAG..$LATEST_TAG --pretty=format:"%H")
+
+YANDEX_ISSUES="https://api.tracker.yandex.net/v2/issues/"
+YANDEX_ISSUES_SEARCH="https://api.tracker.yandex.net/v2/issues/_search"
+
+AUTH_HEADER="Authorization: Oauth: ${OAuth}"
+ORG_HEADER="X-Org-Id: ${OrganizationId}"
+CONTENT_TYPE="Content-Type: application/json"
+
+API_POST_ISSUE=(curl -X POST https://api.tracker.yandex.net/v2/issues
+--silent
+-H ${AUTH_HEADER} \
+-H ${ORG_HEADER} \
+-H ${CONTENT_TYPE} \
+--data-raw '{
+	"queue": "TMP",
+    "summary": "Adding issue for commit "'${LATEST_TAG}',
+    "type": "task",
+    "assignee": '${AUTHOR}' \ '${DATE}' \ - '${LATEST_TAG}',
+    "unique": '${UNIQUE}'
+}'
+)
 
 MARKDOWN="[Full Changelog]($REPOSITORY_URL/compare/$PREVIOUS_TAG...$LATEST_TAG)"
 MARKDOWN+='\n'
@@ -45,4 +57,4 @@ for COMMIT in $COMMITS; do
 done
 
 # Save our markdown to a file
-echo -e $MARKDOWN > CHANGELOG.md
+stdout -e $MARKDOWN

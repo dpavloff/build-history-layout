@@ -1,38 +1,30 @@
 name: CI/CD Pipeline
-on: 
+on:
   push:
     tags:
-      - '*'
+      - "*"
 jobs:
-  install_and_serve:
-    name: Install and serve
+  install_and_test:
+    name: Install and test
     runs-on: ubuntu-latest
     steps:
     - uses: action/setup-node@v1
-      with:
-        node-version: '14'
-    - run: |
-        npm ci
-        npm install
-        npm test
-        npm start
+    - name: Setup node
+      run: npm install --silent
+    - name: Run tests
+      run: jest
+
   create_ticket:
     name: Creating ticket and pushing to Yandex.Tracker
     runs-on: ubuntu-latest
     steps:
-      - run: | 
+      - name: Run bash script
+        run: |
           chmod +x create_ticket_script.sh
           create_ticket_script.sh
-#jobs:
- # install_and_serve:
-  #  name: Install and serve
-   # runs-on: ubuntu-latest
-    #steps:
-    #- uses: actions/checkout@v2
-    #- uses: actions/setup-node@v2
-    #  with:
-    #    node-version: '14'
-    #- run: npm install -g bats
-    #- run: npm test
-    #- run: bats -v
-    #- run: npm start
+        env:
+          OAuth: ${secrets.OAuth}
+          OrgID: ${secrets.OrgID}
+  #run-tests:
+
+  #docker-build-image:
