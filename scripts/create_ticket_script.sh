@@ -20,16 +20,16 @@ ORG_HEADER="X-Org-Id: ${OrganizationId}"
 CONTENT_TYPE="Content-Type: application/json"
 
 API_POST_ISSUE=(curl ---write-out '%{http_code}' --silent --output /dev/null --location -X POST ${YANDEX_ISSUES} \
--H ${AUTH_HEADER} \
--H ${ORG_HEADER} \
--H ${CONTENT_TYPE} \
---data-raw '{
-	"queue": "TMP",
-    "summary": "Adding issue for commit "'${LATEST_TAG}',
-    "type": "task",
-    "assignee": '${AUTHOR}',
-    "unique": '${UNIQUE}'
-}'
+	-H ${AUTH_HEADER} \
+	-H ${ORG_HEADER} \
+	-H ${CONTENT_TYPE} \
+	--data-raw '{
+		"queue": "TMP",
+		"summary": "Adding issue for commit "'${LATEST_TAG}',
+		"type": "task",
+		"description": '${AUTHOR} \n ${DATE} \n V: ${LATEST_TAG}',
+		"unique": '${UNIQUE}'
+	}'
 )
 
 sleep 1
@@ -40,7 +40,7 @@ API_TASK_KEY=$(curl --write-out '%{http_code}' --silent --output /dev/null -X PO
 	-H ${CONTENT_TYPE} \
     --data-raw '{
         "filter": {
-            "unique": "'"${UNIQUE}"'"
+            "unique": '${UNIQUE}'
         }
     }'
 )
