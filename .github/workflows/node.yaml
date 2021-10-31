@@ -15,7 +15,7 @@ jobs:
     - name: npm i  
       run: npm install --silent
     - name: Run tests
-      run: jest
+      run: npm test
 
   create_ticket:
     name: Creating ticket and pushing to Yandex.Tracker
@@ -23,8 +23,8 @@ jobs:
     steps:
       - name: Run bash script
         run: |
-          chmod +x ./github/scripts/create_ticket_script.sh
-          ./github/scripts/create_ticket_script.sh
+          chmod +x ../scripts/create_ticket_script.sh
+          ../scripts/create_ticket_script.sh
         env:
           OAuth: ${secrets.OAuth}
           OrgID: ${secrets.OrgID}
