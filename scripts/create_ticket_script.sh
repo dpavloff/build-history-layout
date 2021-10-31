@@ -43,7 +43,7 @@ for COMMIT in $COMMITS; do
 	fi
 done
 
-API_POST_ISSUE=(curl --write-out '%{http_code}' --silent --head --output /dev/null --location -X POST ${YANDEX_ISSUES} \
+API_POST_ISSUE=(curl --write-out '%{http_code}' --silent --output /dev/null --location -X POST ${YANDEX_ISSUES} \
 	-H "${AUTH_HEADER}" \
 	-H "${ORG_HEADER}" \
 	-H "${CONTENT_TYPE}" \
@@ -60,7 +60,7 @@ sleep 10
 
 echo "API_POST_ISSUE: \n ${API_POST_ISSUE}"
 
-API_TASK_KEY=$(curl --write-out '%{http_code}' --silent --output --head /dev/null -X POST ${YANDEX_ISSUES_SEARCH} \
+API_TASK_KEY=$(curl --write-out '%{http_code}' --silent --output /dev/null --location -X POST ${YANDEX_ISSUES_SEARCH} \
 	-H "${AUTH_HEADER}" \
 	-H "${ORG_HEADER}" \
 	-H "${CONTENT_TYPE}" \
