@@ -1,4 +1,4 @@
-#! /usr/bin/bash
+#!/usr/bin/bash
 REPOSITORY_URL=https://github.com/dpavloff/build-history-layout
 
 GIT_TAGS=$(git tag -l --sort=-version:refname)
@@ -19,7 +19,7 @@ AUTH_HEADER="Authorization: Oauth: ${OAuth}"
 ORG_HEADER="X-Org-Id: ${OrganizationId}"
 CONTENT_TYPE="Content-Type: application/json"
 
-API_POST_ISSUE=(curl -X POST https://api.tracker.yandex.net/v2/issues
+API_POST_ISSUE=(curl -X POST ${YANDEX_ISSUES}
 --silent
 -H ${AUTH_HEADER} \
 -H ${ORG_HEADER} \
@@ -28,10 +28,54 @@ API_POST_ISSUE=(curl -X POST https://api.tracker.yandex.net/v2/issues
 	"queue": "TMP",
     "summary": "Adding issue for commit "'${LATEST_TAG}',
     "type": "task",
-    "assignee": '${AUTHOR}' \ '${DATE}' \ - '${LATEST_TAG}',
+    "assignee": '${AUTHOR}',
     "unique": '${UNIQUE}'
 }'
 )
+
+sleep 1
+
+API_TASK_KEY=$(curl --write-out '%{http_code}' --silent --output /dev/null -X POST ${YANDEX_ISSUES_SEARCH} \
+	-H ${AUTH_HEADER} \
+	-H ${ORG_HEADER} \
+	-H ${CONTENT_TYPE} \
+    --data-raw '{
+        "filter": {
+            "unique": "'"${UNIQUE}"'"
+        }
+    }'
+)
+
+if [ "$API_POST_ISSUE" -eq 409 ]
+then
+    echo "Version already exists"
+
+    UPDATED_STATUS=$(curl --write-out '%{http_code}' --output /dev/null --silent --location -X PATCH \
+        "${API_POST_ISSUE}${API_TASK_KEY}" \
+		-H ${AUTH_HEADER} \
+		-H ${ORG_HEADER} \
+		-H ${CONTENT_TYPE} \
+        --data-raw '{
+            "summary": "Adding issue for commit "'${LATEST_TAG}',
+            "description": "'${AUTHOR} \n ${DATE} \n V: ${LATEST_TAG}' (updated)"
+        }'
+    )
+
+    if [ "$UPDATED_STATUS" -ne 200 ]
+    then
+        echo "Error with updating ticket ${API_TASK_KEY}"
+        exit 1
+    else
+        echo "Successfully updated ticket ${API_TASK_KEY}"
+    fi
+
+elif [ "$API_POST_ISSUE" -ne 201 ]
+then
+    echo "Error with creating release ticket"
+    exit 1
+else
+    echo "Successfully created ticket"
+fi
 
 MARKDOWN="[Full Changelog]($REPOSITORY_URL/compare/$PREVIOUS_TAG...$LATEST_TAG)"
 MARKDOWN+='\n'
@@ -58,3 +102,23 @@ done
 
 # Save our markdown to a file
 echo -e $MARKDOWN > CHANGELOG.md
+
+API_CREATE_COMMENT_URL="https://api.tracker.yandex.net/v2/issues/${API_TASK_KEY}/comments"
+
+COMMENT_STATUS_CODE=$(curl --write-out '%{http_code}' --silent --output /dev/null --location --request POST \
+        "${API_CREATE_COMMENT_URL}" \
+		-H ${AUTH_HEADER} \
+		-H ${ORG_HEADER} \
+		-H ${CONTENT_TYPE} \
+        --data-binary @CHANGELOG.md
+)
+
+if [ "$COMMENT_STATUS_CODE" -ne 201 ]
+then
+    echo "Error in ${API_TASK_KEY}"
+    exit 1
+else
+    echo "Success: ${API_TASK_KEY}"
+fi
+
+rm CHANGELOG.md
