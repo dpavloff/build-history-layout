@@ -3,7 +3,7 @@ REPOSITORY_URL=https://github.com/dpavloff/build-history-layout
 
 GIT_TAGS=$(git tag -l --sort=-version:refname)
 
-TAGS=${GIT_TAGS}
+TAGS=($GIT_TAGS)
 echo "${TAGS}"
 LATEST_TAG=${TAGS[0]}
 echo "Latest tag: $LATEST_TAG"
