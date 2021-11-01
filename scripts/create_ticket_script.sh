@@ -43,7 +43,7 @@ for COMMIT in $COMMITS; do
 	fi
 done
 
-API_POST_ISSUE=(curl --write-out '%{http_code}' --silent --output /dev/null --location -X POST ${YANDEX_ISSUES} \
+API_POST_ISSUE=$(curl -o /dev/null -s -w "%{http_code}\n" -X POST ${YANDEX_ISSUES} \
 	-H "${AUTH_HEADER}" \
 	-H "${ORG_HEADER}" \
 	-H "${CONTENT_TYPE}" \
