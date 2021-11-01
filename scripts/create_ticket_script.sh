@@ -5,11 +5,16 @@ GIT_TAGS=$(git tag -l --sort=-version:refname)
 
 TAGS=${GIT_TAGS}
 LATEST_TAG=${TAGS[0]}
+echo "Latest tag: $LATEST_TAG"
 PREVIOUS_TAG=${TAGS[1]}
 AUTHOR=$(git show ${LATEST_TAG} | grep Author: | head -1)
+echo "Authro: $AUTHOR"
 DATE=$(git show ${LATEST_TAG} | grep Date: | head -1)
+echo "Date: $DATE"
 DESCRIPTION="${AUTHOR}\n${DATE}\nV: ${LATEST_TAG}"
+echo "Description: $DESCRIPTION"
 UNIQUE="dpavloff/build-history-layout/master/${LATEST_TAG}"
+echo "UNIQUE: $UNIQUE"
 
 COMMITS=$(git log $PREVIOUS_TAG..$LATEST_TAG --pretty=format:"%H")
 
@@ -43,6 +48,7 @@ for COMMIT in $COMMITS; do
 	fi
 done
 
+
 API_POST_ISSUE=$(curl -o /dev/null -s -w "%{http_code}" POST ${YANDEX_ISSUES} -H "${AUTH_HEADER}" -H "${ORG_HEADER}" -H "${CONTENT_TYPE}" -d '{
 		"summary":"Adding issue for commit '"${LATEST_TAG}"'",
 		"queue":"TMP",
@@ -67,10 +73,12 @@ if [ $API_POST_ISSUE -eq 409 ]
 then
     echo "Version already exists"
 
+	UPDATED_DESCRIPTION=$"${AUTHOR} \n ${DATE}\n Version: ${LATEST_TAG} (updated)"
+
     UPDATED_STATUS=$(curl -w '%{http_code}' -o /dev/null -s PATCH \
         "${API_POST_ISSUE}${API_TASK_KEY}" -H ${AUTH_HEADER} -H ${ORG_HEADER} -H ${CONTENT_TYPE} -d '{
-            "summary":"Adding issue for commit "'${LATEST_TAG}'",
-            "description":"'${AUTHOR} \n ${DATE} \n '"Version:"' ${LATEST_TAG}' (updated)"
+            "summary":"Adding issue for commit "'"${LATEST_TAG}"'",
+            "description":"'"${UPDATED_DESCRIPTION}"'"
         }'
     )
 
