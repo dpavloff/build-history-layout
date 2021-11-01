@@ -44,11 +44,11 @@ for COMMIT in $COMMITS; do
 done
 
 API_POST_ISSUE=$(curl -o /dev/null -s -w "%{http_code}" POST ${YANDEX_ISSUES} -H "${AUTH_HEADER}" -H "${ORG_HEADER}" -H "${CONTENT_TYPE}" -d '{
-		"summary":"Adding issue for commit '${LATEST_TAG}'",
+		"summary":"Adding issue for commit ${LATEST_TAG}",
 		"queue":"TMP",
 		"type":"task",
-		"description":"'${DESCRIPTION}'",
-		"unique":"'${UNIQUE}'"
+		"description":"${DESCRIPTION}",
+		"unique":"${UNIQUE}"
 	}'
 )
 
@@ -58,7 +58,7 @@ echo "API_POST_ISSUE: ${API_POST_ISSUE}"
 
 API_TASK_KEY=$(curl --w '%{http_code}' -s -o /dev/null POST ${YANDEX_ISSUES_SEARCH} -H "${AUTH_HEADER}" -H "${ORG_HEADER}" -H "${CONTENT_TYPE}" -d '{
         "filter": {
-            "unique":"'${UNIQUE}'"
+            "unique":"${UNIQUE}"
         }
     }'
 )
