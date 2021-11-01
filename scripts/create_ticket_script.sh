@@ -43,30 +43,22 @@ for COMMIT in $COMMITS; do
 	fi
 done
 
-API_POST_ISSUE=$(curl -o /dev/null -s -w "%{http_code}\n" -X POST ${YANDEX_ISSUES} \
-	-H "${AUTH_HEADER}" \
-	-H "${ORG_HEADER}" \
-	-H "${CONTENT_TYPE}" \
-	--data-raw '{
-		"queue": "TMP",
-		"summary": "Adding issue for commit '"${LATEST_TAG}"'",
-		"type": "task",
-		"description": "'"${DESCRIPTION}"'",
-		"unique": "'"${UNIQUE}"'"
+API_POST_ISSUE=$(curl -o /dev/null -s -w "%{http_code}" POST ${YANDEX_ISSUES} -H "${AUTH_HEADER}" -H "${ORG_HEADER}" -H "${CONTENT_TYPE}" -d '{
+		"summary":"Adding issue for commit '${LATEST_TAG}'",
+		"queue":"TMP",
+		"type":"task",
+		"description":"'${DESCRIPTION}'",
+		"unique":"'${UNIQUE}'"
 	}'
 )
 
-sleep 10
+sleep 3
 
-echo "API_POST_ISSUE: \n ${API_POST_ISSUE}"
+echo "API_POST_ISSUE: ${API_POST_ISSUE}"
 
-API_TASK_KEY=$(curl --write-out '%{http_code}' --silent --output /dev/null --location -X POST ${YANDEX_ISSUES_SEARCH} \
-	-H "${AUTH_HEADER}" \
-	-H "${ORG_HEADER}" \
-	-H "${CONTENT_TYPE}" \
-    --data-raw '{
+API_TASK_KEY=$(curl --w '%{http_code}' -s -o /dev/null POST ${YANDEX_ISSUES_SEARCH} -H "${AUTH_HEADER}" -H "${ORG_HEADER}" -H "${CONTENT_TYPE}" -d '{
         "filter": {
-            "unique": "'"${UNIQUE}"'"
+            "unique":"'${UNIQUE}'"
         }
     }'
 )
@@ -77,14 +69,10 @@ if [ $API_POST_ISSUE -eq 409 ]
 then
     echo "Version already exists"
 
-    UPDATED_STATUS=$(curl --write-out '%{http_code}' --output /dev/null --head --silent --location -X PATCH \
-        "${API_POST_ISSUE}${API_TASK_KEY}" \
-		-H ${AUTH_HEADER} \
-		-H ${ORG_HEADER} \
-		-H ${CONTENT_TYPE} \
-        --data-raw '{
-            "summary": "Adding issue for commit "'"${LATEST_TAG}"'",
-            "description": "'${AUTHOR} \n ${DATE} \n '"V:"' ${LATEST_TAG}' (updated)"
+    UPDATED_STATUS=$(curl -w '%{http_code}' -o /dev/null -s PATCH \
+        "${API_POST_ISSUE}${API_TASK_KEY}" -H ${AUTH_HEADER} -H ${ORG_HEADER} -H ${CONTENT_TYPE} -d '{
+            "summary":"Adding issue for commit "'${LATEST_TAG}'",
+            "description":"'${AUTHOR} \n ${DATE} \n '"Version:"' ${LATEST_TAG}' (updated)"
         }'
     )
 
@@ -109,13 +97,7 @@ echo -e $MARKDOWN > CHANGELOG.md
 
 API_CREATE_COMMENT_URL="https://api.tracker.yandex.net/v2/issues/${API_TASK_KEY}/comments"
 
-COMMENT_STATUS_CODE=$(curl --write-out '%{http_code}' --silent --output /dev/null --location --request POST \
-        ${API_CREATE_COMMENT_URL} \
-		-H ${AUTH_HEADER} \
-		-H ${ORG_HEADER} \
-		-H ${CONTENT_TYPE} \
-        --data-binary @CHANGELOG.md
-)
+COMMENT_STATUS_CODE=$(curl --write-out '%{http_code}' --silent --output /dev/null --location --request POST ${API_CREATE_COMMENT_URL} -H ${AUTH_HEADER} -H ${ORG_HEADER} -H ${CONTENT_TYPE} -d @CHANGELOG.md)
 
 if [ "$COMMENT_STATUS_CODE" -ne 201 ]
 then
