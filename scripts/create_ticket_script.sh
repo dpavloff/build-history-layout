@@ -50,7 +50,7 @@ for COMMIT in $COMMITS; do
 done
 
 
-API_POST_ISSUE=$(curl -o /dev/null -s -w "%{http_code}" POST ${YANDEX_ISSUES} -H "${AUTH_HEADER}" -H "${ORG_HEADER}" -H "${CONTENT_TYPE}" -d '{
+API_POST_ISSUE=$(curl -o /dev/null -s -w "\n%{http_code}" -X POST ${YANDEX_ISSUES} -H "${AUTH_HEADER}" -H "${ORG_HEADER}" -H "${CONTENT_TYPE}" -d '{
 		"summary":"Adding issue for commit '"${LATEST_TAG}"'",
 		"queue":"TMP",
 		"type":"task",
@@ -59,11 +59,11 @@ API_POST_ISSUE=$(curl -o /dev/null -s -w "%{http_code}" POST ${YANDEX_ISSUES} -H
 	}'
 )
 
-sleep 3
+sleep 1
 
 echo "API_POST_ISSUE: ${API_POST_ISSUE}"
 
-API_TASK_KEY=$(curl --w '%{http_code}' -s -o /dev/null POST ${YANDEX_ISSUES_SEARCH} -H "${AUTH_HEADER}" -H "${ORG_HEADER}" -H "${CONTENT_TYPE}" -d '{
+API_TASK_KEY=$(curl --w '\n%{http_code}' -s -o /dev/null -X POST ${YANDEX_ISSUES_SEARCH} -H "${AUTH_HEADER}" -H "${ORG_HEADER}" -H "${CONTENT_TYPE}" -d '{
         "filter": {
             "unique":"'"${UNIQUE}"'"
         }
@@ -76,7 +76,7 @@ then
 
 	UPDATED_DESCRIPTION=$"${AUTHOR} \n ${DATE}\n Version: ${LATEST_TAG} (updated)"
 
-    UPDATED_STATUS=$(curl -w '%{http_code}' -o /dev/null -s PATCH \
+    UPDATED_STATUS=$(curl -w '\n%{http_code}' -o /dev/null -s PATCH \
         "${API_POST_ISSUE}${API_TASK_KEY}" -H ${AUTH_HEADER} -H ${ORG_HEADER} -H ${CONTENT_TYPE} -d '{
             "summary":"Adding issue for commit "'"${LATEST_TAG}"'",
             "description":"'"${UPDATED_DESCRIPTION}"'"
@@ -104,7 +104,7 @@ echo -e $MARKDOWN > CHANGELOG.md
 
 API_CREATE_COMMENT_URL="https://api.tracker.yandex.net/v2/issues/${API_TASK_KEY}/comments"
 
-COMMENT_STATUS_CODE=$(curl --write-out '%{http_code}' --silent --output /dev/null --location --request POST ${API_CREATE_COMMENT_URL} -H ${AUTH_HEADER} -H ${ORG_HEADER} -H ${CONTENT_TYPE_MD} -d @CHANGELOG.md)
+COMMENT_STATUS_CODE=$(curl -w '\n%{http_code}' -s -o /dev/null -X POST ${API_CREATE_COMMENT_URL} -H ${AUTH_HEADER} -H ${ORG_HEADER} -H ${CONTENT_TYPE_MD} -d @CHANGELOG.md)
 
 if [ "$COMMENT_STATUS_CODE" -ne 201 ]
 then
