@@ -7,7 +7,7 @@ function Footer() {
         <div className="links">
           <a href="https://github.com/dpavloff">Support</a>
           <a href="https://github.com/dpavloff">Learning</a>
-          <a href="https://github.com/dpavloff">Russian version</a>
+          <a href="https://github.com/dpavloff">Русская версия</a>
         </div>
         <div className="copyright">
           <p>
